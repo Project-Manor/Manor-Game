@@ -3,3 +3,9 @@
 !.gitignore
 !.gitattributes
 !readme.md
+
+!env/
+!env/**/*
+
+!run/
+!run/**/*

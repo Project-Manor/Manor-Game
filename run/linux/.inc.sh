@@ -29,4 +29,5 @@ copyImageData() {
     mkdir "./$outDir"
 
     sudo docker cp "$imageName:/$dataPath" "./$outDir"
+    sudo chown -R --reference=. "./$outDir"
 }

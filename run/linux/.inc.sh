@@ -21,12 +21,15 @@ runImage() {
 
 copyImageData() {
     local dataPath=$1
-    local outDir=$2
+    local makeOutDir=$2
+    local outDir=$3
 
-    if [ -d "$outDir" ]; then
-        sudo rm -r "./$outDir"
+    if [ "$makeOutDir" -eq 1 ]; then
+        if [ -d "$outDir" ]; then
+            sudo rm -r "./$outDir"
+        fi
+        mkdir "./$outDir"
     fi
-    mkdir "./$outDir"
 
     sudo docker cp "$imageName:/$dataPath" "./$outDir"
     sudo chown -R --reference=. "./$outDir"

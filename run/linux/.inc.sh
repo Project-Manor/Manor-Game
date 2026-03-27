@@ -21,13 +21,17 @@ runImage() {
 
 copyImageData() {
     local dataPath=$1
-    local makeOutDir=$2
-    local outDir=$3
+    local removeExistingOutDir=$2
+    local makeOutDir=$3
+    local outDir=$4
 
-    if [ "$makeOutDir" -eq 1 ]; then
+    if [ "$removeExistingOutDir" -eq 1 ]; then
         if [ -d "$outDir" ]; then
             sudo rm -r "./$outDir"
         fi
+    fi
+
+    if [ "$makeOutDir" -eq 1 ]; then
         mkdir "./$outDir"
     fi
 

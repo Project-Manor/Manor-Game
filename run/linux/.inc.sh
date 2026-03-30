@@ -15,8 +15,9 @@ buildImage() {
 
 runImage() {
     local pyScript=$1
+    local pyArgs=("${@:2}")
     buildImage
-    sudo docker run --name $imageName $imageName:latest $pyScript
+    sudo docker run --name $imageName $imageName:latest $pyScript ${pyArgs[@]}
 }
 
 copyImageData() {

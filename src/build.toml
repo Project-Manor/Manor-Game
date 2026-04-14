@@ -2,6 +2,10 @@ dynamic_linkage = [
     "vnd/raylib/lib/libraylib.so.550"
 ]
 
+include_paths = [
+    "vnd/raylib/include"
+]
+
 sources = [
     "main"
 ]

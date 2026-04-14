@@ -1,4 +1,4 @@
-#include "../vnd/raylib/include/raylib.h"
+#include "raylib.h"
 
 int main(int argc, char **argv) {
     InitWindow(800, 450, "Manor Game");

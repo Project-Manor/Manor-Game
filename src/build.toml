@@ -1,0 +1,7 @@
+dynamic_linkage = [
+    "vnd/raylib/lib/libraylib.so.550"
+]
+
+sources = [
+    "main"
+]

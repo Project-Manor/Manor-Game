@@ -4,6 +4,7 @@
 !.dockerignore
 !.gitattributes
 !readme.md
+!.clangd
 
 !env/
 !env/**/*

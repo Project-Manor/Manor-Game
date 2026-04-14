@@ -1,0 +1,4 @@
+CompileFlags:
+  Add:
+    - -std=c++23
+    - -I/home/q4niel/Workspace/Manor-Game/vnd/raylib/include

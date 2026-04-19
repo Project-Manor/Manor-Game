@@ -5,6 +5,7 @@
 !.gitattributes
 !readme.md
 !.clangd
+!.re-mote
 
 !env/
 !env/**/*

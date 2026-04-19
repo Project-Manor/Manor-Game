@@ -3,6 +3,7 @@ import sys
 import platform
 import requests
 import tarfile
+from pathlib import Path
 from enum import Enum
 from typing import List
 import tomllib as toml
@@ -18,6 +19,35 @@ def jsonIndent(string: str, level: int = 1) -> str:
         indents += indentLiteral
 
     return indents + string
+
+def fetchVendors() -> None:
+    vendorDir: str = "vnd"
+    tmpDir: str = "tmp"
+    os.mkdir(vendorDir)
+    os.mkdir(tmpDir)
+
+    renamedLibs: List[str] = []
+
+    with open("env/vnd.toml", "rb") as f:
+        config: dict = toml.load(f)
+
+        for key, value in config["vendors"].items():
+            print(f"Installing {key}...")
+            with open(f"{tmpDir}/{key}", 'wb') as file:
+                file.write (
+                    requests.get(value[platform.system()]).content
+                )
+
+            print(f"Extracting {key}...")
+            with tarfile.open(f"{tmpDir}/{key}", "r:*") as tar:
+                tar.extractall(path=f"{vendorDir}")
+
+            for path in os.listdir(vendorDir):
+                if path not in renamedLibs:
+                    os.rename(f"{vendorDir}/{path}", f"{vendorDir}/{key}")
+                    renamedLibs.append(key)
+
+    return#fetchVendors()
 
 def attemptEditorFiles() -> None:
     class Editor(Enum):
@@ -53,38 +83,32 @@ def attemptEditorFiles() -> None:
 
     return#attemptEditorFiles()
 
-def fetchVendors() -> None:
-    vendorDir: str = "vnd"
-    tmpDir: str = "tmp"
-    os.mkdir(vendorDir)
-    os.mkdir(tmpDir)
+def attemptClangdFile() -> None:
+    for arg in sys.argv:
+        if arg.startswith("clangd=") and arg.removeprefix("clangd=") == "1":
+            print("Generating .clangd File...")
 
-    renamedLibs: List[str] = []
+            with open(".clangd", "wb") as file:
+                content: str = "CompileFlags:\n  Add:"
 
-    with open("env/vnd.toml", "rb") as f:
-        config: dict = toml.load(f)
+                def addFlag(flag: str) -> str:
+                    return f"\n    - {flag}"
 
-        for key, value in config["vendors"].items():
-            print(f"Installing {key}...")
-            with open(f"{tmpDir}/{key}", 'wb') as file:
-                file.write (
-                    requests.get(value[platform.system()]).content
-                )
+                content += addFlag("-std=c++23")
 
-            print(f"Extracting {key}...")
-            with tarfile.open(f"{tmpDir}/{key}", "r:*") as tar:
-                tar.extractall(path=f"{vendorDir}")
+                if os.path.exists("vnd"):
+                    includes = [p for p in Path("vnd").rglob("include") if p.is_dir()]
+                    for d in includes:
+                        content += addFlag(f"-I__INSERT_PROJECT_PATH__/{d}")
 
-            for path in os.listdir(vendorDir):
-                if path not in renamedLibs:
-                    os.rename(f"{vendorDir}/{path}", f"{vendorDir}/{key}")
-                    renamedLibs.append(key)
+                file.write(content.encode("utf-8"))
 
-    return#fetchVendors()
+    return#attemptClangdFile()
 
 def main() -> None:
-    attemptEditorFiles()
     fetchVendors()
+    attemptEditorFiles()
+    attemptClangdFile()
     return#main()
 
 if __name__ == "__main__": main()

@@ -1,18 +1,10 @@
-#include <raylib.h>
+#include "engine/core.hxx"
 
 int main(int argc, char **argv) {
-    InitWindow(800, 450, "Manor Game");
-    SetTargetFPS(60);
+    engine::init();
 
-    while (!WindowShouldClose()) {
-        BeginDrawing();
+    while (engine::proc());
 
-        ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-
-        EndDrawing();
-    }
-
-    CloseWindow();
+    engine::term();
     return 0;
 }

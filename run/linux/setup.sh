@@ -6,6 +6,10 @@ source "run/linux/.inc.sh"
 editor="editor=none"
 clangd="clangd=0"
 
+if [[ -d "vnd" ]]; then
+    rm -r vnd
+fi
+
 read -p ":: Generate Zed Editor Project Files [y/n] " zed
 if [[ "$zed" == "y" || "$zed" == "Y" ]]; then
     editor="editor=zed"

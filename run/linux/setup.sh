@@ -26,8 +26,5 @@ fi
 
 if [[ "$clgd" == "y" || "$clgd" == "Y" ]]; then
     copyImageData "Manor-Game/.clangd" 1 0 ".clangd"
-
-    #replace="__INSERT_PROJECT_PATH__"
-    #with="/googoogaagaa"
-    #sed -i "s/${replace}/${with}/g" ".clangd"
+    sed -i "s|__INSERT_PROJECT_PATH__|$(pwd)|g" ".clangd"
 fi

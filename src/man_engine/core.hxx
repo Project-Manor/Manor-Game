@@ -1,6 +1,6 @@
 #pragma once
 
-namespace engine {
+namespace man {
     void init();
     bool proc();
     void term();

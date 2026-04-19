@@ -8,5 +8,5 @@ include_paths = [
 
 sources = [
     "main",
-    "engine/core"
+    "man_engine/core"
 ]

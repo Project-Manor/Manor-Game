@@ -1,10 +1,10 @@
-#include "engine/core.hxx"
+#include "man_engine/core.hxx"
 
 int main(int argc, char **argv) {
-    engine::init();
+    man::init();
 
-    while (engine::proc());
+    while (man::proc());
 
-    engine::term();
+    man::term();
     return 0;
 }

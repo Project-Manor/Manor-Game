@@ -1,12 +1,12 @@
 #include "core.hxx"
 #include <raylib.h>
 
-void engine::init() {
+void man::init() {
     InitWindow(800, 450, "Manor Game");
     SetTargetFPS(60);
 }
 
-bool engine::proc() {
+bool man::proc() {
     if (WindowShouldClose()) return false;
     BeginDrawing();
 
@@ -16,4 +16,4 @@ bool engine::proc() {
     return true;
 }
 
-void engine::term() { CloseWindow(); }
+void man::term() { CloseWindow(); }

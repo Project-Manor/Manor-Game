@@ -1,4 +1,12 @@
 #pragma once
+
+#ifndef DEBUG
+#define printspace(count)
+#define print(...)
+#define println(...)
+#define printlns(...)
+#else
+
 #include "detail/detail_print.hxx"
 
 // Print multiple newlines
@@ -13,3 +21,5 @@
 
 // Print all arguments, each on a newline
 #define printlns(...) man::detail::printlns(__VA_ARGS__)
+
+#endif

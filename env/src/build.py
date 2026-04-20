@@ -2,6 +2,7 @@ from typing import List
 import tomllib as toml
 import subprocess
 import shutil
+import sys
 import os
 
 outDir: str = "out"
@@ -14,10 +15,11 @@ def execCmd(args: List[str]) -> None:
     subprocess.run(args)
     return
 
-def compileSrc(src: str) -> None:
+def compileSrc(src: str, isDebug: bool) -> None:
     execCmd([
         "clang++",
         "-std=c++23",
+        "-DDEBUG" if isDebug else "",
         *includePaths,
         "-c",
         src,
@@ -27,6 +29,11 @@ def compileSrc(src: str) -> None:
     return
 
 def main() -> None:
+    isDebug: bool = False
+    for arg in sys.argv:
+        if arg == "-DDEBUG":
+            isDebug = True
+
     os.mkdir(outDir)
     os.mkdir(binDir)
     os.mkdir(objectDir)
@@ -42,7 +49,7 @@ def main() -> None:
 
     objects: List[str] = []
     for src in config["sources"]:
-        compileSrc(f"{srcDir}/{src}.cxx")
+        compileSrc(f"{srcDir}/{src}.cxx", isDebug)
         objects.append(f"{objectDir}/{os.path.basename(src)}.o")
 
     shared: List[str] = []

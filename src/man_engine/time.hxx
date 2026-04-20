@@ -1,6 +1,6 @@
 #pragma once
 #include "core.hxx"
-#include <chrono>
+#include <string>
 
 namespace man {
     class Time {
@@ -10,29 +10,22 @@ namespace man {
 
         static const long long &tick();
         static const float &deltaTime();
-        static const long long &frameTick();
+
+        static const std::string stringedData();
 
     friend void man::init();
     friend bool man::proc();
 
     private:
-        using TimePoint = std::chrono::time_point <
-            std::chrono::system_clock,
-            std::chrono::duration <
-                long,
-                std::ratio <
-                    1,
-                    1000000000
-                >
-            >
-        >;
-
         Time();
         void _proc();
 
+        const double _startTime;
         long long _tick;
-        TimePoint _prevTime;
+        double _time;
+        double _prevTime;
         float _deltaTime;
-        long long _frameTick;
+        int _animTick;
+        const int _animFPS;
     };
 }

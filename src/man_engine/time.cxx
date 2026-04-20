@@ -1,4 +1,5 @@
 #include "time.hxx"
+#include <chrono>
 
 namespace man {
     Time &Time::Time::instance() {
@@ -8,18 +9,32 @@ namespace man {
 
     const long long &Time::tick() { return instance()._tick; }
     const float &Time::deltaTime() { return instance()._deltaTime; }
-    const long long &Time::frameTick() { return instance()._frameTick; }
+
+    const std::string Time::stringedData() {
+        return std::format (
+            "- Time Data -\nTick: {}\nDelta Time: {}\nAnimation Tick: {}\nAnimation FPS: {}\n",
+            instance()._tick,
+            instance()._deltaTime,
+            instance()._animTick,
+            instance()._animFPS
+        );
+    }
 
     Time::Time() :
+        _startTime(std::chrono::high_resolution_clock::now().time_since_epoch().count() / 1000000000.0),
         _tick(0),
         _deltaTime(0),
-        _frameTick(0)
+        _animTick(0),
+        _animFPS(8)
     {}
 
     void Time::_proc() {
         _tick++;
-        TimePoint time = std::chrono::high_resolution_clock::now();
-        _deltaTime = std::chrono::duration<float>(time - _prevTime).count();
-        _prevTime = time;
+
+        _time = std::chrono::high_resolution_clock::now().time_since_epoch().count() / 1000000000.0 - _startTime;
+        _deltaTime = _time - _prevTime;
+        _prevTime = _time;
+
+        _animTick = _time / (1.0 / (double)_animFPS);
     }
 }

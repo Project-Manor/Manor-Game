@@ -6,15 +6,20 @@ namespace man {
         return inst;
     }
 
-    const long long &Time::time() { return instance()._time; }
-    const double &Time::deltaTime() { return instance()._deltaTime; }
+    const long long &Time::tick() { return instance()._tick; }
+    const float &Time::deltaTime() { return instance()._deltaTime; }
     const long long &Time::frameTick() { return instance()._frameTick; }
 
     Time::Time() :
-        _time(0),
+        _tick(0),
         _deltaTime(0),
         _frameTick(0)
     {}
 
-    void Time::_proc() {}
+    void Time::_proc() {
+        _tick++;
+        TimePoint time = std::chrono::high_resolution_clock::now();
+        _deltaTime = std::chrono::duration<float>(time - _prevTime).count();
+        _prevTime = time;
+    }
 }

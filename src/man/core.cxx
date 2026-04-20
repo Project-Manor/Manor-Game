@@ -5,6 +5,10 @@
 void man::init() {
     Time::instance();
 
+#ifndef DEBUG
+    SetTraceLogLevel(LOG_NONE);
+#endif
+
     InitWindow(800, 450, "Manor Game");
     setFPS(60);
 }

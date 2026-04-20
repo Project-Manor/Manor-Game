@@ -1,4 +1,4 @@
-#include "man_engine/core.hxx"
+#include "man/core.hxx"
 
 int main(int argc, char **argv) {
     man::init();

@@ -1,31 +1,17 @@
 #include "core.hxx"
 #include <raylib.h>
 #include "time.hxx"
+#include "render/renderer.hxx"
 
 void man::init() {
     Time::instance();
-
-#ifndef DEBUG
-    SetTraceLogLevel(LOG_NONE);
-#endif
-
-    InitWindow(800, 450, "Manor Game");
-    setFPS(60);
+    Renderer::instance();
 }
 
 bool man::proc() {
     Time::instance()._proc();
-
-    if (WindowShouldClose()) return false;
-    BeginDrawing();
-
-    ClearBackground(SKYBLUE);
-
-    EndDrawing();
-    return true;
+    Renderer::instance()._proc();
+    return Renderer::isAlive();
 }
 
-void man::term() { CloseWindow(); }
-
-int man::getFPS() { return GetFPS(); }
-void man::setFPS(int value) { SetTargetFPS(value); }
+void man::term() {}

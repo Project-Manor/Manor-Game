@@ -10,5 +10,6 @@ sources = [
     "main",
     "man/core",
     "man/time",
-    "man/render/renderer"
+    "man/render/renderer",
+    "man/render/renderable"
 ]

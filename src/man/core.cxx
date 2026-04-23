@@ -5,13 +5,13 @@
 
 void man::init() {
     Time::instance();
-    Renderer::instance();
+    render::Renderer::instance();
 }
 
 bool man::proc() {
     Time::instance()._proc();
-    Renderer::instance()._proc();
-    return Renderer::isAlive();
+    render::Renderer::instance()._proc();
+    return render::Renderer::isAlive();
 }
 
 void man::term() {}

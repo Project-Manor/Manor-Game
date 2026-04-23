@@ -1,15 +1,21 @@
 #pragma once
+#include <unordered_map>
 #include "../core.hxx"
+#include "render_types.hxx"
+#include "renderable.hxx"
 
-namespace man {
+namespace man::render {
     class Renderer {
     public:
         Renderer(const Renderer&) = delete;
         static Renderer &instance();
         static const bool isAlive();
 
-        const int getFPS() const;
-        void setFPS(int value);
+        static const int getFPS();
+        static void setFPS(int value);
+
+        static const RenderIndex addRenderable(Renderable *render);
+        static void removeRenderable(const RenderIndex renderIndex);
 
     friend bool man::proc();
 
@@ -17,6 +23,13 @@ namespace man {
         Renderer();
         void _proc();
         void _term();
+
         bool _isAlive;
+
+        RenderIndex _nextRenderIndex;
+        std::unordered_map <
+            RenderIndex,
+            Renderable*
+        > _renders;
     };
 }

@@ -1,6 +1,9 @@
 #include "renderer.hxx"
 #include "raylib.h"
+#include "raymath.h"
 #include "renderable.hxx"
+#include "cmath"
+#include <print>
 
 namespace man::render {
     Renderer &Renderer::instance() {
@@ -20,10 +23,10 @@ namespace man::render {
     Renderer::Renderer() :
         _isAlive(true),
         _cam({
-            .position = {.0f, .0f, .0f},
+            .position = {10.0f, 10.0f, 10.0f},
             .target = {.0f, .0f, .0f},
-            .up = {.0f, .0f, .0f},
-            .fovy = .0f,
+            .up = {.0f, 1.0f, .0f},
+            .fovy = 60.0f,
             .projection = CAMERA_PERSPECTIVE
         }),
         _nextRenderIndex(0),
@@ -69,109 +72,64 @@ namespace man::render {
     }
 
     // Camera FOV
-    const float Renderer::Camera::getFOV()
+    const float Renderer::getFOV()
     { return instance()._cam.fovy; }
 
-    void Renderer::Camera::setFOV(float val)
+    void Renderer::setFOV(float val)
     { instance()._cam.fovy = val; }
 
     // Camera Projection
-    const float Renderer::Camera::getProjection()
+    const float Renderer::getProjection()
     { return instance()._cam.projection; }
 
-    void Renderer::Camera::setProjection(int val)
+    void Renderer::setProjection(int val)
     { instance()._cam.projection = val; }
 
     // Camera Position
-    const float Renderer::Camera::getPosX()
+    const float Renderer::getPosX()
     { return instance()._cam.position.x; }
 
-    void Renderer::Camera::setPosX(float val)
+    void Renderer::setPosX(float val)
     { instance()._cam.position.x = val; }
 
-    const float Renderer::Camera::getPosY()
+    const float Renderer::getPosY()
     { return instance()._cam.position.y; }
 
-    void Renderer::Camera::setPosY(float val)
+    void Renderer::setPosY(float val)
     { instance()._cam.position.y = val; }
 
-    const float Renderer::Camera::getPosZ()
+    const float Renderer::getPosZ()
     { return instance()._cam.position.z; }
 
-    void Renderer::Camera::setPosZ(float val)
+    void Renderer::setPosZ(float val)
     { instance()._cam.position.z = val; }
 
-    const Vector3 Renderer::Camera::getPos() { return {
+    const Vector3 Renderer::getPos() { return {
         getPosX(),
         getPosY(),
         getPosZ()
     };}
 
-    void Renderer::Camera::setPos(Vector3 vec) {
+    void Renderer::setPos(Vector3 vec) {
         setPosX(vec.x);
         setPosY(vec.y);
         setPosZ(vec.z);
     }
 
-    // Camera Target
-    const float Renderer::Camera::getTargetX()
-    { return instance()._cam.target.x; }
-
-    void Renderer::Camera::setTargetX(float val)
-    { instance()._cam.target.x = val; }
-
-    const float Renderer::Camera::getTargetY()
-    { return instance()._cam.target.y; }
-
-    void Renderer::Camera::setTargetY(float val)
-    { instance()._cam.target.y = val; }
-
-    const float Renderer::Camera::getTargetZ()
-    { return instance()._cam.target.z; }
-
-    void Renderer::Camera::setTargetZ(float val)
-    { instance()._cam.target.z = val; }
-
-    const Vector3 Renderer::Camera::getTarget() { return {
-        getTargetX(),
-        getTargetY(),
-        getTargetZ()
-    };}
-
-    void Renderer::Camera::setTarget(Vector3 vec) {
-        setTargetX(vec.x);
-        setTargetY(vec.y);
-        setTargetZ(vec.z);
+    // Camera Rotation
+    const Vector3 Renderer::getRot() {
+        return instance().camRotation;
     }
 
-    // Camera Up
-    const float Renderer::Camera::getUpX()
-    { return instance()._cam.up.x; }
+    void Renderer::setRot(Vector3 vec) {
+        const float DEG_2_RAD = 0.017453292519943295769236907684886f;
 
-    void Renderer::Camera::setUpX(float val)
-    { instance()._cam.up.x = val; }
+        float l = std::cos(vec.x * DEG_2_RAD);
+        float y = std::sin(vec.x * DEG_2_RAD) * l;
+        float x = std::sin(vec.y * DEG_2_RAD) * l;
+        float z = std::cos(vec.y * DEG_2_RAD) * l;
 
-    const float Renderer::Camera::getUpY()
-    { return instance()._cam.up.y; }
-
-    void Renderer::Camera::setUpY(float val)
-    { instance()._cam.up.y = val; }
-
-    const float Renderer::Camera::getUpZ()
-    { return instance()._cam.up.z; }
-
-    void Renderer::Camera::setUpZ(float val)
-    { instance()._cam.up.z = val; }
-
-    const Vector3 Renderer::Camera::getUp() { return {
-        getUpX(),
-        getUpY(),
-        getUpZ()
-    };}
-
-    void Renderer::Camera::setUp(Vector3 vec) {
-        setUpX(vec.x);
-        setUpY(vec.y);
-        setUpZ(vec.z);
+        instance().camRotation = vec;
+        instance()._cam.target = Vector3Add(getPos(), {x, y, z});
     }
 }

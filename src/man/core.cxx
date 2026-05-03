@@ -4,6 +4,7 @@
 #include "render/renderer.hxx"
 
 void man::init() {
+    // spritus
     Time::instance();
     render::Renderer::instance();
 }

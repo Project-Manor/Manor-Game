@@ -13,7 +13,7 @@ namespace man::render {
     const bool Renderer::isAlive()
     { return instance()._isAlive; }
 
-    const Camera3D Renderer::getCamera()
+    const Camera3D &Renderer::getCamera()
     { return instance()._cam; }
 
     const int Renderer::getFPS()
@@ -124,7 +124,7 @@ namespace man::render {
     }
 
     void Renderer::setRot(Vector3 vec) {
-        const float DEG_2_RAD = 0.017453292519943295769236907684886f;
+        #define DEG_2_RAD (float)0.017453292519943295769236907684886f
 
         float l = std::cos(vec.x * DEG_2_RAD);
         float y = std::sin(vec.x * DEG_2_RAD) * l;

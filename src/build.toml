@@ -8,12 +8,17 @@ include_paths = [
 
 sources = [
     "main",
+
     "man/core",
     "man/time",
+
     "man/render/renderer",
     "man/render/renderable",
+
     "man/things/things",
     "man/things/thing",
     "man/things/sprite",
-    "man/things/spatial"
+    "man/things/spatial",
+
+    "game/game"
 ]

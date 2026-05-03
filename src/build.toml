@@ -17,6 +17,8 @@ sources = [
 
     "man/things/things",
     "man/things/thing",
+    "man/things/sprite",
+    "man/things/spatial",
 
     "game/game"
 ]

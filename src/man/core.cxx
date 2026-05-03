@@ -5,6 +5,7 @@
 #include "things/things.hxx"
 
 void man::init() {
+    // spritus
     Time::instance();
     render::Renderer::instance();
     man::Things::instance();

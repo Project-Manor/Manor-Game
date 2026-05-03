@@ -11,7 +11,7 @@ namespace man::render {
     }
 
     const bool Renderer::isAlive()
-    { return instance()._isAlive; }9
+    { return instance()._isAlive; }
 
     const int Renderer::getFPS()
     { return GetFPS(); }

@@ -9,5 +9,7 @@ include_paths = [
 sources = [
     "main",
     "man/core",
-    "man/time"
+    "man/time",
+    "man/render/renderer",
+    "man/render/renderable"
 ]

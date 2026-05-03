@@ -13,6 +13,9 @@ namespace man::render {
     const bool Renderer::isAlive()
     { return instance()._isAlive; }
 
+    const Camera3D Renderer::getCamera()
+    { return instance()._cam; }
+
     const int Renderer::getFPS()
     { return GetFPS(); }
 

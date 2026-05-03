@@ -12,6 +12,8 @@ namespace man::render {
         static Renderer &instance();
         static const bool isAlive();
 
+        static const Camera3D getCamera();
+
         static const int getFPS();
         static void setFPS(int value);
 

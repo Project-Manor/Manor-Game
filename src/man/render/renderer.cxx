@@ -3,7 +3,6 @@
 #include "raymath.h"
 #include "renderable.hxx"
 #include "cmath"
-#include <print>
 
 namespace man::render {
     Renderer &Renderer::instance() {
@@ -12,7 +11,7 @@ namespace man::render {
     }
 
     const bool Renderer::isAlive()
-    { return instance()._isAlive; }
+    { return instance()._isAlive; }9
 
     const int Renderer::getFPS()
     { return GetFPS(); }

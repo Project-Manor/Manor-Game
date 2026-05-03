@@ -2,7 +2,7 @@
 #include "things.hxx"
 
 template<typename T>
-requires std::derived_from<T, man::Thing>
+requires std::derived_from<T, man::things::Thing>
 void man::Things::create() {
     T *t = new T;
 
@@ -38,7 +38,7 @@ void man::Things::create() {
 }
 
 template<typename T>
-requires std::derived_from<T, man::Thing>
+requires std::derived_from<T, man::things::Thing>
 std::optional<std::reference_wrapper<T>> man::Things::getTagged() {
     Things &inst = instance();
 

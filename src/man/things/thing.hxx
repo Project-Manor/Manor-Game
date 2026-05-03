@@ -4,7 +4,7 @@
 #define UNTAGGED_THING "UNTAGGED_THING"
 #define TAG(name) static constexpr std::string_view tag = #name
 
-namespace man {
+namespace man::things {
     class Thing {
     public:
         Thing();

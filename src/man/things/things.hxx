@@ -13,11 +13,11 @@ namespace man {
         static Things &instance();
 
         template<typename T>
-        requires std::derived_from<T, man::Thing>
+        requires std::derived_from<T, man::things::Thing>
         static void create();
 
         template<typename T>
-        requires std::derived_from<T, man::Thing>
+        requires std::derived_from<T, man::things::Thing>
         static std::optional<std::reference_wrapper<T>> getTagged();
 
     friend bool man::proc();

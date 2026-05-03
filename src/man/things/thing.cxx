@@ -1,4 +1,4 @@
 #include "thing.hxx"
 
-man::Thing::Thing() {}
-man::Thing::~Thing() {}
+man::things::Thing::Thing() {}
+man::things::Thing::~Thing() {}

@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <optional>
+#include <string>
 #include "thing.hxx"
 #include "../core.hxx"
 
@@ -18,7 +19,11 @@ namespace man {
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>
-        static std::optional<std::reference_wrapper<T>> getTagged();
+        static std::optional<std::reference_wrapper<T>> create(std::string tag);
+
+        template<typename T>
+        requires std::derived_from<T, man::things::Thing>
+        static std::optional<std::reference_wrapper<T>> getTagged(std::string tag);
 
     friend bool man::proc();
 
@@ -37,7 +42,7 @@ namespace man {
         std::vector<ThingContainer> _uThingCtrs;
 
         std::unordered_map <
-            std::string_view,
+            std::string,
             ThingContainer
         > _tThingCtrs;
     };

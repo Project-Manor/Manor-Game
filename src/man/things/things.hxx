@@ -14,7 +14,7 @@ namespace man {
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>
-        static void create();
+        static std::optional<std::reference_wrapper<T>> create();
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>

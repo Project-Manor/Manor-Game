@@ -52,7 +52,7 @@ namespace man::render {
         bool _isAlive;
         Camera3D _cam;
 
-        Vector3 camRotation;
+        Vector3 _camRotation;
 
         RenderIndex _nextRenderIndex;
         std::unordered_map <

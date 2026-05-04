@@ -10,6 +10,7 @@ namespace man {
 
         static const long long &tick();
         static const float &deltaTime();
+        static const int &animTick();
 
         static const std::string stringedData();
 

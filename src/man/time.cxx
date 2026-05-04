@@ -19,12 +19,14 @@ const std::string man::Time::stringedData() {
     );
 }
 
+const int &man::Time::animTick() { return instance()._animTick; }
+
 man::Time::Time() :
     _startTime(std::chrono::high_resolution_clock::now().time_since_epoch().count() / 1000000000.0),
     _tick(0),
     _deltaTime(0),
     _animTick(0),
-    _animFPS(8)
+    _animFPS(6)
 {}
 
 void man::Time::_proc() {

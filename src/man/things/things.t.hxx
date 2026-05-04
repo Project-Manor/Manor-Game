@@ -1,6 +1,7 @@
 #pragma once
 #include "things.hxx"
 #include "../print.hxx"
+#include "../str_colour.hxx"
 
 template<typename T>
 requires std::derived_from<T, man::things::Thing>
@@ -29,8 +30,8 @@ requires std::derived_from<T, man::things::Thing>
 std::optional<std::reference_wrapper<T>> man::Things::create(std::string tag) {
     if (instance()._tThingCtrs.contains(tag)) {
         printspace();
-        println("Things Error: A thing with tag '", tag, "' already exists!");
-        println("            : Thing was not created.");
+        println(man::strRed("| Things Error:"), " A thing with tag ", man::strCyan(tag), " already exists!");
+        println(man::strRed("|"), " Thing was not created, returning ", man::strCyan("null option"));
         printspace();
         return {std::nullopt};
     }
@@ -67,8 +68,8 @@ std::optional<std::reference_wrapper<T>> man::Things::getTagged(std::string tag)
     };
 
     printspace();
-    println("Things Warning: A thing with tag '", tag, "' does not exist!");
-    println("              : Returning 'null option'.");
+    println(man::strYellow("| Things Warning:"), " A thing with tag ", man::strCyan(tag), " does not exist!");
+    println(man::strYellow("|"), " Returning ", man::strCyan("null option"));
     printspace();
     return {std::nullopt};
 }

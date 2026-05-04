@@ -11,6 +11,7 @@ sources = [
 
     "man/core",
     "man/time",
+    "man/str_colour",
 
     "man/render/renderer",
     "man/render/renderable",

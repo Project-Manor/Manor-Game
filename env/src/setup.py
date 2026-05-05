@@ -101,6 +101,7 @@ def attemptClangdFile() -> None:
                     for d in includes:
                         content += addFlag(f"-I__INSERT_PROJECT_PATH__/{d}")
 
+                content+="\n\nDocumentation:\n  CommentFormat: Doxygen"
                 file.write(content.encode("utf-8"))
 
     return#attemptClangdFile()

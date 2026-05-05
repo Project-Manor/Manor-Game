@@ -4,7 +4,9 @@ man::things::Body::Body() :
     _isValid(false),
     _model({0}),
     _texture({0})
-{}
+{
+    _addTerm(this, &Body::_cleanup);
+}
 
 void man::things::Body::_initModel (
     std::string modelPath,
@@ -16,7 +18,7 @@ void man::things::Body::_initModel (
     _isValid = true;
 };
 
-void man::things::Body::finish() {
+void man::things::Body::_cleanup() {
     if (!_isValid) return;
     UnloadModel(_model);
     UnloadTexture(_texture);

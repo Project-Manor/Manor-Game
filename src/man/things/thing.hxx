@@ -13,10 +13,6 @@ namespace man::things {
         Thing();
         virtual ~Thing();
 
-        virtual void launch();
-        virtual void process();
-        virtual void finish();
-
     protected:
         /**
         *   @brief Add a Initialization function, runs sequentially on Thing's creation

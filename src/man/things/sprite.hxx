@@ -10,9 +10,6 @@ namespace man::things {
     class Sprite : public Spatial, public man::render::Renderable {
     public:
         Sprite();
-        void launch() override;
-        void process() override;
-        void finish() override;
         void draw() override;
 
         struct Animation {

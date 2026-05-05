@@ -8,7 +8,6 @@ namespace man::things {
     class Body : public Spatial, public man::render::Renderable {
     public:
         Body();
-        void finish() override;
         void draw() override;
 
     protected:
@@ -21,5 +20,7 @@ namespace man::things {
         bool _isValid;
         Model _model;
         Texture2D _texture;
+
+        void _cleanup();
     };
 }

@@ -5,7 +5,7 @@
 
 template<typename T>
 requires std::derived_from<T, man::things::Thing>
-const man::Things::ThingRef<T> man::Things::create() {
+const man::things::ThingRef<T> man::Things::create() {
     T *t = new T;
     for (std::function<void()> &fn : static_cast<T*>(t)->_inits)
         fn();
@@ -28,7 +28,7 @@ const man::Things::ThingRef<T> man::Things::create() {
 
 template<typename T>
 requires std::derived_from<T, man::things::Thing>
-const man::Things::ThingRef<T> man::Things::create(std::string tag) {
+const man::things::ThingRef<T> man::Things::create(std::string tag) {
     if (instance()._tThingCtrs.contains(tag)) {
         printspace();
         println(man::strYellow("| Things Warning:"), " A thing with tag ", man::strCyan(tag), " already exists!");
@@ -62,7 +62,7 @@ const man::Things::ThingRef<T> man::Things::create(std::string tag) {
 
 template<typename T>
 requires std::derived_from<T, man::things::Thing>
-const man::Things::ThingRef<T> man::Things::getTagged(std::string tag) {
+const man::things::ThingRef<T> man::Things::getTagged(std::string tag) {
     if (instance()._tThingCtrs.contains(tag)) return {
         true,
         static_cast<T*>(instance()._tThingCtrs[tag].ptr)

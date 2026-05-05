@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include "thing.hxx"
+#include "thing_ref.hxx"
 #include "../core.hxx"
 
 namespace man {
@@ -14,35 +15,15 @@ namespace man {
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>
-        class ThingRef {
-        public:
-            ThingRef(bool exists, T *ptr = nullptr) :
-                _exists(exists),
-                _ptr(ptr)
-            {}
-
-            const bool exists() const { return _exists; }
-            explicit operator bool() const { return exists(); }
-
-            T *const get() const { return _ptr; }
-            T *const operator->() const { return get(); }
-
-        private:
-            bool _exists;
-            T *const _ptr;
-        };
+        static const man::things::ThingRef<T> create();
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>
-        static const ThingRef<T> create();
+        static const man::things::ThingRef<T> create(std::string tag);
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>
-        static const ThingRef<T> create(std::string tag);
-
-        template<typename T>
-        requires std::derived_from<T, man::things::Thing>
-        static const ThingRef<T> getTagged(std::string tag);
+        static const man::things::ThingRef<T> getTagged(std::string tag);
 
     friend bool man::proc();
 

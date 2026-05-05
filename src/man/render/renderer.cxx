@@ -25,14 +25,15 @@ namespace man::render {
     Renderer::Renderer() :
         _isAlive(true),
         _cam({
-            .position = {10.0f, 10.0f, 10.0f},
+            .position = {0.0f, 0.0f, 1.0f},
             .target = {.0f, .0f, .0f},
             .up = {.0f, 1.0f, .0f},
             .fovy = 60.0f,
             .projection = CAMERA_PERSPECTIVE
         }),
         _nextRenderIndex(0),
-        _renders({})
+        _renders({}),
+        _camRotation({0})
     {
         #ifndef DEBUG
             SetTraceLogLevel(LOG_NONE);
@@ -120,7 +121,7 @@ namespace man::render {
 
     // Camera Rotation
     const Vector3 Renderer::getRot() {
-        return instance().camRotation;
+        return instance()._camRotation;
     }
 
     void Renderer::setRot(Vector3 vec) {
@@ -131,7 +132,7 @@ namespace man::render {
         float x = std::sin(vec.y * DEG_2_RAD) * l;
         float z = std::cos(vec.y * DEG_2_RAD) * l;
 
-        instance().camRotation = vec;
+        instance()._camRotation = vec;
         instance()._cam.target = Vector3Add(getPos(), {x, y, z});
     }
 }

@@ -13,11 +13,6 @@ namespace man::things {
         Thing();
         virtual ~Thing();
 
-        /**
-        *   @brief Runs once on Thing's creation
-        */
-        virtual void init() = 0;
-
         virtual void launch();
         virtual void process();
         virtual void finish();

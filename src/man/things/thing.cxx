@@ -7,7 +7,3 @@ man::things::Thing::Thing() :
 {}
 
 man::things::Thing::~Thing() = default;
-
-void man::things::Thing::launch() {}
-void man::things::Thing::process() {}
-void man::things::Thing::finish() {}

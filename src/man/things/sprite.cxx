@@ -23,18 +23,6 @@ namespace man::things {
         length = (int)((float)spriteSheet.width / (float)size + .5f);
     }
 
-    void Sprite::launch() {
-
-    }
-
-    void Sprite::process() {
-
-    }
-
-    void Sprite::finish() {
-
-    }
-
     void Sprite::draw() {
         for (int i : _currentAnim.switchPoints) {
             if (_currentFrame == i && _currentAnim.name != _nextAnim.name) {

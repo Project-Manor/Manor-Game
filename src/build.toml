@@ -22,5 +22,6 @@ sources = [
     "man/things/spatial",
     "man/things/body",
 
-    "game/game"
+    "game/game",
+    "game/player"
 ]

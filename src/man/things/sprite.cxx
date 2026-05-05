@@ -3,6 +3,7 @@
 #include "../time.hxx"
 #include <raylib.h>
 #include <raymath.h>
+#include <print>
 
 namespace man::things {
     Sprite::Sprite() :
@@ -12,8 +13,15 @@ namespace man::things {
         _currentAnim({"parasite", {}, {0}}),
         _nextAnim({"parasite", {}, {0}}),
         _currentFrame(0),
-        _animations({})
-    {}
+        _animations({}),
+        _flip(1)
+    {
+        _addInit(this, &Sprite::_launch);
+    }
+
+    void Sprite::_launch() {
+        if (!_animations.empty()) playAnimation(_animations[0].name);
+    }
 
     Sprite::Animation::Animation(std::string n, std::string s, std::vector<int> p) {
         name = n;
@@ -44,7 +52,8 @@ namespace man::things {
             _currentFrame = 0;
         }
         _texRec.x = _currentFrame * _currentAnim.size;
-        DrawBillboardRec(render::Renderer::getCamera(), _currentAnim.spriteSheet, _texRec, _pos, {1, 1}, WHITE);
+        float sizeMod = _currentAnim.size / 32.0f;
+        DrawBillboardRec(render::Renderer::getCamera(), _currentAnim.spriteSheet, _texRec, _pos, {(float)_flip * sizeMod, 1 * sizeMod}, WHITE);
     }
 
     void Sprite::addAnimation(Sprite::Animation a) {
@@ -58,6 +67,10 @@ namespace man::things {
                 break;
             }
         }
+    }
+
+    void Sprite::flipSprite(bool b) {
+        _flip = b ? -1 : 1;
     }
 
     std::string Sprite::getAnimation() { return _currentAnim.name; }

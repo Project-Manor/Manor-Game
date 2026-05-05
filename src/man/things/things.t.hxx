@@ -7,7 +7,6 @@ template<typename T>
 requires std::derived_from<T, man::things::Thing>
 std::optional<std::reference_wrapper<T>> man::Things::create() {
     T *t = new T;
-    static_cast<T*>(t)->init();
 
     for (std::function<void()> &fn : static_cast<T*>(t)->_inits)
         fn();

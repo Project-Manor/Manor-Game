@@ -15,9 +15,9 @@ namespace man::things {
         _animations({})
     {}
 
-    Sprite::Animation::Animation(std::string n, Texture2D s, std::vector<int> p) {
+    Sprite::Animation::Animation(std::string n, std::string s, std::vector<int> p) {
         name = n;
-        spriteSheet = s;
+        spriteSheet = LoadTexture(s.c_str());
         switchPoints = p;
         size = spriteSheet.height;
         length = (int)((float)spriteSheet.width / (float)size + .5f);

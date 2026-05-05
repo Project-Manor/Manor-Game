@@ -2,7 +2,6 @@
 #include <raylib.h>
 #include "../man/things/things.hxx"
 #include "../man/things/sprite.hxx"
-#include "../man/print.hxx"
 
 void game::init() {
     man::Things::create<man::things::Sprite>();
@@ -10,12 +9,12 @@ void game::init() {
     if (sprite.has_value()) {
         sprite.value().get().addAnimation({
             "idle",
-            LoadTexture("res/spritesheets/detective_idle.png"),
+            "res/spritesheets/detective_idle.png",
             {0}
         });
         sprite.value().get().addAnimation({
             "walk",
-            LoadTexture("res/spritesheets/detective_walk.png"),
+            "res/spritesheets/detective_walk.png",
             {2, 5}
         });
         sprite.value().get().playAnimation("idle");

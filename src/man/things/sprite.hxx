@@ -4,7 +4,6 @@
 #include <raylib.h>
 #include <string>
 #include <vector>
-#include <array>
 
 
 namespace man::things {
@@ -19,7 +18,7 @@ namespace man::things {
         void draw() override;
 
         struct Animation {
-            Animation(std::string n, Texture2D s, std::vector<int> p);
+            Animation(std::string n, std::string s, std::vector<int> p);
             std::string name;
             Texture2D spriteSheet;
             std::vector<int> switchPoints;

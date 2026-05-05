@@ -9,8 +9,6 @@
 namespace man::things {
     class Sprite : public Spatial, public man::render::Renderable {
     public:
-        TAG(Sprite);
-
         Sprite();
         void launch() override;
         void process() override;

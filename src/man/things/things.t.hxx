@@ -7,15 +7,23 @@ template<typename T>
 requires std::derived_from<T, man::things::Thing>
 std::optional<std::reference_wrapper<T>> man::Things::create() {
     T *t = new T;
+    static_cast<T*>(t)->init();
     static_cast<T*>(t)->launch();
+
+    for (std::function<void()> &fn : static_cast<T*>(t)->_inits)
+        fn();
 
     instance()._uThingCtrs.emplace_back (
         t,
         [] (void *ptr) {
             static_cast<T*>(ptr)->process();
+            for (std::function<void()> &fn : static_cast<T*>(ptr)->_procs)
+                fn();
         },
         [] (void *ptr) {
             static_cast<T*>(ptr)->finish();
+            for (std::function<void()> &fn : static_cast<T*>(ptr)->_terms)
+                fn();
             delete static_cast<T*>(ptr);
         }
     );

@@ -6,9 +6,9 @@ namespace man::things {
     class Spatial : public Thing {
     public:
         Spatial();
-        virtual ~Spatial();
 
     protected:
         Vector3 _pos;
+        bool _pixelPerfectPosition;
     };
 }

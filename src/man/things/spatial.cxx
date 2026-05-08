@@ -2,8 +2,7 @@
 
 namespace man::things {
     Spatial::Spatial() :
-        _pos({0})
+        _pos({0}),
+        _pixelPerfectPosition(false)
     {}
-
-    Spatial::~Spatial() {}
 }

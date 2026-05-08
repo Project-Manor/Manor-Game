@@ -5,9 +5,13 @@
 Player::Player() :
     // Movement
     _speed(8),
+    _deceleration(3),
+    _currentSpeed(0),
     _lastMoveVec({})
 {
     _addProc(this, &Player::_process);
+
+    _pixelPerfectPosition = true;
 
     man::things::Sprite::addAnimation({
         "idle",
@@ -33,11 +37,18 @@ void Player::_process() {
     else
         _lastMoveVec = moveVec;
 
-    _pos += moveVec * _speed / 16 * man::Time::deltaTime();
     if (moveVec.x < 0) man::things::Sprite::flipSprite(true);
     if (moveVec.x > 0) man::things::Sprite::flipSprite(false);
-    if (Vector3Length(inputVec) > 0)
+    if (Vector3Length(inputVec) > 0) {
         man::things::Sprite::playAnimation("walk");
-    else
+        _currentSpeed = _speed;
+    }
+    else {
         man::things::Sprite::playAnimation("idle");
+        _currentSpeed = Clamp(_currentSpeed - _deceleration * man::Time::deltaTime(), 0, _speed);
+    }
+
+    Vector3 movement = moveVec * _currentSpeed / 16 * man::Time::deltaTime();
+
+    _pos += movement;
 }

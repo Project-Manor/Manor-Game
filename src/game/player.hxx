@@ -10,5 +10,7 @@ private:
     void _process();
 
     const int _speed;
+    const int _deceleration;
+    float _currentSpeed;
     Vector3 _lastMoveVec;
 };

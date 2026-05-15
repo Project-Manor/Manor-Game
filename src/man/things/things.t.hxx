@@ -5,10 +5,8 @@
 
 template<typename T>
 requires std::derived_from<T, man::things::Thing>
-std::optional<std::reference_wrapper<T>> man::Things::create() {
+const man::things::ThingRef<T> man::Things::create() {
     T *t = new T;
-    static_cast<T*>(t)->init();
-
     for (std::function<void()> &fn : static_cast<T*>(t)->_inits)
         fn();
 
@@ -25,56 +23,55 @@ std::optional<std::reference_wrapper<T>> man::Things::create() {
         }
     );
 
-    return std::ref (
-        *static_cast<T*>(instance()._uThingCtrs.back().ptr)
-    );
+    return {true, t};
 }
 
 template<typename T>
 requires std::derived_from<T, man::things::Thing>
-std::optional<std::reference_wrapper<T>> man::Things::create(std::string tag) {
+const man::things::ThingRef<T> man::Things::create(std::string tag) {
     if (instance()._tThingCtrs.contains(tag)) {
         printspace();
-        println(man::strRed("| Things Error:"), " A thing with tag ", man::strCyan(tag), " already exists!");
-        println(man::strRed("|"), " Thing was not created, returning ", man::strCyan("null option"));
+        println(man::strYellow("| Things Warning:"), " A thing with tag ", man::strCyan(tag), " already exists!");
+        println(man::strYellow("|"), " Thing was not created, returning ", man::strCyan("NULLED ThingRef"));
         printspace();
-        return {std::nullopt};
+        return {false};
     }
 
     T *t = new T;
-    static_cast<T*>(t)->launch();
+    for (std::function<void()> &fn : static_cast<T*>(t)->_inits)
+        fn();
 
     instance()._tThingCtrs.insert ({
         tag,
         {
             t,
             [] (void *ptr) {
-                static_cast<T*>(ptr)->process();
+                for (std::function<void()> &fn : static_cast<T*>(ptr)->_procs)
+                    fn();
             },
             [] (void *ptr) {
-                static_cast<T*>(ptr)->finish();
+                for (std::function<void()> &fn : static_cast<T*>(ptr)->_terms)
+                    fn();
                 delete static_cast<T*>(ptr);
             }
         }
     });
 
-    return std::ref (
-        *static_cast<T*>(instance()._tThingCtrs[tag].ptr)
-    );
+    return {true, t};
 }
 
 template<typename T>
 requires std::derived_from<T, man::things::Thing>
-std::optional<std::reference_wrapper<T>> man::Things::getTagged(std::string tag) {
+const man::things::ThingRef<T> man::Things::getTagged(std::string tag) {
     if (instance()._tThingCtrs.contains(tag)) return {
-        std::ref (
-            *static_cast<T*>(instance()._tThingCtrs[tag].ptr)
-        )
+        true,
+        static_cast<T*>(instance()._tThingCtrs[tag].ptr)
     };
 
     printspace();
     println(man::strYellow("| Things Warning:"), " A thing with tag ", man::strCyan(tag), " does not exist!");
-    println(man::strYellow("|"), " Returning ", man::strCyan("null option"));
+    println(man::strYellow("|"), " Returning ", man::strCyan("NULLED ThingRef"));
     printspace();
-    return {std::nullopt};
+
+    return {false};
 }

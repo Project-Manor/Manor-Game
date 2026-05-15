@@ -1,5 +1,4 @@
 #include "thing.hxx"
-#include "../print.hxx"
 
 man::things::Thing::Thing() :
     _inits(0),

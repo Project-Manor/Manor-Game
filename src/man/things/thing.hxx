@@ -1,14 +1,29 @@
 #pragma once
+#include <concepts>
 #include <vector>
 #include <functional>
+#include <unordered_map>
 
 namespace man {
     class Things;
+
+    namespace things {
+        class Thing;
+
+        template<typename T>
+        requires std::derived_from<T, Thing>
+        class ThingRef;
+    }
 }
 
 namespace man::things {
     class Thing {
     friend class man::Things;
+
+    template<typename T>
+    requires std::derived_from<T, Thing>
+    friend class man::things::ThingRef;
+
     public:
         Thing();
         virtual ~Thing();
@@ -48,5 +63,13 @@ namespace man::things {
         mutable std::vector<std::function<void()>> _inits;
         mutable std::vector<std::function<void()>> _procs;
         mutable std::vector<std::function<void()>> _terms;
+
+        std::unordered_map <
+            void*,
+            std::function<void(void*, bool)>
+        > _refs;
+
+        void _addRef(void *ptr, std::function<void(void*, bool)> fn);
+        void _rmRef(void *ptr);
     };
 }

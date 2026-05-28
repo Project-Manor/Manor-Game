@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
-cd "$(realpath -m "$0/../../..")"
-source "run/linux/.inc.sh"
+cd "$(realpath -m "$0/../..")"
+source "run/.inc.sh"
 
 runImage "env/src/build.py"
 

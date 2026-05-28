@@ -10,6 +10,18 @@ if [[ -d "vnd" ]]; then
     rm -r vnd
 fi
 
+if [[ -d ".zed" ]]; then
+    rm -r .zed
+fi
+
+if [[ -f ".clangd" ]]; then
+    rm -r .clangd
+fi
+
+if [ -d "out" ]; then
+    rm -r out
+fi
+
 read -p ":: Generate Zed Editor Project Files [y/n] " zed
 if [[ "$zed" == "y" || "$zed" == "Y" ]]; then
     editor="editor=zed"
@@ -21,6 +33,8 @@ if [[ "$clgd" == "y" || "$clgd" == "Y" ]]; then
 fi
 
 runImage "env/src/setup.py" $editor $clangd
+
+mkdir out
 
 copyImageData "Manor-Game/vnd" 1 0 "vnd"
 

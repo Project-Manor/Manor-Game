@@ -3,4 +3,4 @@ clear
 cd "$(realpath -m "$0/../../..")"
 
 sh run/linux/build.sh
-./out/bin/manor_game
+./out/latest/bin/manor_game

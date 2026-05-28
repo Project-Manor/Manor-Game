@@ -3,24 +3,10 @@ clear
 cd "$(realpath -m "$0/../../..")"
 source "run/linux/.inc.sh"
 
+sh run/linux/prune.sh
+
 editor="editor=none"
 clangd="clangd=0"
-
-if [[ -d "vnd" ]]; then
-    rm -r vnd
-fi
-
-if [[ -d ".zed" ]]; then
-    rm -r .zed
-fi
-
-if [[ -f ".clangd" ]]; then
-    rm -r .clangd
-fi
-
-if [ -d "out" ]; then
-    rm -r out
-fi
 
 read -p ":: Generate Zed Editor Project Files [y/n] " zed
 if [[ "$zed" == "y" || "$zed" == "Y" ]]; then

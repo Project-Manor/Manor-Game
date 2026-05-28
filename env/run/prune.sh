@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-cd "$(realpath -m "$0/../..")"
+cd "$(realpath -m "$0/../../..")"
 
 if [[ -d ".zed" ]]; then
     rm -r .zed

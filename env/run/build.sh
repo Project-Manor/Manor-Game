@@ -1,9 +1,9 @@
 #!/bin/bash
 clear
-cd "$(realpath -m "$0/../..")"
-source "run/.inc.sh"
+cd "$(realpath -m "$0/../../..")"
+source "env/run/.inc.sh"
 
-runImage "env/src/build.py" "-DDEBUG"
+runImage "env/src/build.py"
 
 date=$(date +"%Y_%m_%d_%H_%M_%S")
 

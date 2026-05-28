@@ -1,9 +1,9 @@
 #!/bin/bash
 clear
-cd "$(realpath -m "$0/../..")"
-source "run/.inc.sh"
+cd "$(realpath -m "$0/../../..")"
+source "env/run/.inc.sh"
 
-sh run/prune.sh
+sh env/run/prune.sh
 
 editor="editor=none"
 clangd="clangd=0"

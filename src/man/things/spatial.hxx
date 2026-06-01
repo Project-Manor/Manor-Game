@@ -9,6 +9,5 @@ namespace man::things {
 
     protected:
         Vector3 _pos;
-        bool _pixelPerfectPosition;
     };
 }

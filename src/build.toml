@@ -23,5 +23,8 @@ sources = [
     "man/things/body",
 
     "game/game",
-    "game/player"
+    "game/player",
+    "game/room",
+    "game/debug_fp_cam",
+    "game/npc"
 ]

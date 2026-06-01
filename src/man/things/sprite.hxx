@@ -23,10 +23,13 @@ namespace man::things {
 
         void addAnimation(Animation a);
         void playAnimation(std::string name);
+        void flipSprite(bool b);
         std::string getAnimation();
 
 
     private:
+        void _launch();
+
         Rectangle _texRec;
         int _lastAnimTick;
         bool _shouldSwitch;
@@ -34,5 +37,6 @@ namespace man::things {
         Animation _currentAnim;
         int _currentFrame;
         std::vector<Animation> _animations;
+        int _flip;
     };
 }

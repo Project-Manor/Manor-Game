@@ -33,7 +33,9 @@ namespace man::render {
         }),
         _nextRenderIndex(0),
         _renders({}),
-        _camRotation({0})
+        _camRotation({0}),
+        _camZ({0}),
+        _camX({0})
     {
         #ifndef DEBUG
             SetTraceLogLevel(LOG_NONE);
@@ -124,7 +126,8 @@ namespace man::render {
         return instance()._camRotation;
     }
 
-    void Renderer::setRot(Vector3 vec) {
+    void Renderer::setRot(Vector3 v) {
+        Vector3 vec = v + Vector3(0, 180);
         #define DEG_2_RAD (float)0.017453292519943295769236907684886f
 
         float l = std::cos(vec.x * DEG_2_RAD);
@@ -132,7 +135,21 @@ namespace man::render {
         float x = std::sin(vec.y * DEG_2_RAD) * l;
         float z = std::cos(vec.y * DEG_2_RAD) * l;
 
-        instance()._camRotation = vec;
+        float xx = std::sin((vec.y - 90) * DEG_2_RAD) * l;
+        float zx = std::cos((vec.y - 90) * DEG_2_RAD) * l;
+
+        _camZ = Vector3Normalize({x, y, z});
+        _camX = Vector3Normalize({xx, y, zx});
+
+        instance()._camRotation = v;
         instance()._cam.target = Vector3Add(getPos(), {x, y, z});
+    }
+
+    const Vector3 Renderer::getCamZ() {
+        return instance()._camZ;
+    }
+
+    const Vector3 Renderer::getCamX() {
+        return instance()._camX;
     }
 }

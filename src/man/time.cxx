@@ -6,12 +6,14 @@ man::Time &man::Time::Time::instance() {
     return inst;
 }
 
+const double &man::Time::time() { return instance()._time; }
 const long long &man::Time::tick() { return instance()._tick; }
 const float &man::Time::deltaTime() { return instance()._deltaTime; }
 
 const std::string man::Time::stringedData() {
     return std::format (
-        "- Time Data -\nTick: {}\nDelta Time: {}\nAnimation Tick: {}\nAnimation FPS: {}\n",
+        "- Time Data -\nTime: {}\nTick: {}\nDelta Time: {}\nAnimation Tick: {}\nAnimation FPS: {}\n",
+        instance()._time,
         instance()._tick,
         instance()._deltaTime,
         instance()._animTick,

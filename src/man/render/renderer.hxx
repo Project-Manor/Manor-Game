@@ -27,20 +27,23 @@ namespace man::render {
         void setProjection(int val);
 
         // Position
-        const float getPosX();
+        static const float getPosX();
         void setPosX(float val);
 
-        const float getPosY();
+        static const float getPosY();
         void setPosY(float val);
 
-        const float getPosZ();
+        static const float getPosZ();
         void setPosZ(float val);
 
-        const Vector3 getPos();
+        static const Vector3 getPos();
         void setPos(Vector3 vec);
 
-        const Vector3 getRot();
+        static const Vector3 getRot();
         void setRot(Vector3 vec);
+
+        static const Vector3 getCamZ();
+        static const Vector3 getCamX();
 
     friend bool man::proc();
 
@@ -53,6 +56,8 @@ namespace man::render {
         Camera3D _cam;
 
         Vector3 _camRotation;
+        Vector3 _camZ;
+        Vector3 _camX;
 
         RenderIndex _nextRenderIndex;
         std::unordered_map <

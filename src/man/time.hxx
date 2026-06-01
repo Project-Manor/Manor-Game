@@ -8,6 +8,7 @@ namespace man {
         Time(const Time&) = delete;
         static Time &instance();
 
+        static const double &time();
         static const long long &tick();
         static const float &deltaTime();
         static const int &animTick();

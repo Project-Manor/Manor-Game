@@ -1,14 +1,12 @@
 #!/bin/bash
 clear
 cd "$(realpath -m "$0/../../..")"
-source "run/linux/.inc.sh"
+source "env/run/.inc.sh"
+
+sh env/run/prune.sh
 
 editor="editor=none"
 clangd="clangd=0"
-
-if [[ -d "vnd" ]]; then
-    rm -r vnd
-fi
 
 read -p ":: Generate Zed Editor Project Files [y/n] " zed
 if [[ "$zed" == "y" || "$zed" == "Y" ]]; then
@@ -21,6 +19,8 @@ if [[ "$clgd" == "y" || "$clgd" == "Y" ]]; then
 fi
 
 runImage "env/src/setup.py" $editor $clangd
+
+mkdir out
 
 copyImageData "Manor-Game/vnd" 1 0 "vnd"
 

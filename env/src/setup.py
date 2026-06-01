@@ -69,12 +69,12 @@ def attemptEditorFiles() -> None:
             with open(".zed/tasks.json", "wb") as file:
                 content: str = ""
 
-                for script in os.listdir("run/linux"):
+                for script in os.listdir("env/run"):
                     if script == ".inc.sh": continue
 
                     task: str = jsonIndent(f"\"label\": \"{script.removesuffix(".sh").upper()}\",\n", 2)
                     task     += jsonIndent("\"command\": \"sh\",\n", 2)
-                    task     += jsonIndent(f"\"args\": [\"run/linux/{script}\"],\n", 2)
+                    task     += jsonIndent(f"\"args\": [\"env/run/{script}\"],\n", 2)
                     task     += jsonIndent("\"cwd\": \"$ZED_WORKTREE_ROOT\",\n", 2)
                     content  += "\n" + jsonIndent(f"{f"{{\n{task}"}")
                     content  += jsonIndent("},")

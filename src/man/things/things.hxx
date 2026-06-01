@@ -2,9 +2,9 @@
 #include <functional>
 #include <vector>
 #include <unordered_map>
-#include <optional>
 #include <string>
 #include "thing.hxx"
+#include "thing_ref.hxx"
 #include "../core.hxx"
 
 namespace man {
@@ -15,15 +15,15 @@ namespace man {
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>
-        static std::optional<std::reference_wrapper<T>> create();
+        static const man::things::ThingRef<T> create();
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>
-        static std::optional<std::reference_wrapper<T>> create(std::string tag);
+        static const man::things::ThingRef<T> create(std::string tag);
 
         template<typename T>
         requires std::derived_from<T, man::things::Thing>
-        static std::optional<std::reference_wrapper<T>> getTagged(std::string tag);
+        static const man::things::ThingRef<T> getTagged(std::string tag);
 
     friend bool man::proc();
 

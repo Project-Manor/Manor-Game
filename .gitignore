@@ -9,8 +9,5 @@
 !env/
 !env/**/*
 
-!run/
-!run/**/*
-
 !src/
 !src/**/*

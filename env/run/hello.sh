@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
 cd "$(realpath -m "$0/../../..")"
+source "env/run/.inc.sh"
 
-sh run/linux/build.sh
-./out/bin/manor_game
+runImage "env/src/hello.py"

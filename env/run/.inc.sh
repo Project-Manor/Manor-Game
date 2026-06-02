@@ -14,6 +14,7 @@ deleteImage() {
         fi
     else
         echo -e $missingContainerEngineError
+        exit 1
     fi
 }
 
@@ -26,6 +27,7 @@ buildImage() {
         sudo docker buildx build -t $imageName:latest -f $containerFile .
     else
         echo -e $missingContainerEngineError
+        exit 1
     fi
 }
 
@@ -40,6 +42,7 @@ runImage() {
         sudo docker run --name $imageName $imageName:latest $pyScript ${pyArgs[@]}
     else
         echo -e $missingContainerEngineError
+        exit 1
     fi
 }
 
@@ -65,6 +68,7 @@ copyImageData() {
         sudo docker cp "$imageName:/$dataPath" "./$outDir"
     else
         echo -e $missingContainerEngineError
+        exit 1
     fi
 
     # sudo chown -R --reference=. "./$outDir"

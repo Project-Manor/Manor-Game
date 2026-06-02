@@ -1,8 +1,11 @@
 #include "renderer.hxx"
 #include "raylib.h"
 #include "raymath.h"
-#include "renderable.hxx"
+#include "../things/renderable.hxx"
 #include "cmath"
+#include <unordered_map>
+#include <vector>
+#include <algorithm>
 
 namespace man::render {
     Renderer &Renderer::instance() {
@@ -55,20 +58,36 @@ namespace man::render {
         ClearBackground(SKYBLUE);
         BeginMode3D(_cam);
 
-        for (auto &[index, render] : _renders)
-            render->draw();
+        // Sort renderables by distance from camera.
+        std::unordered_map<float, Renderable*> unsorted;
+        unsorted.reserve(_renders.size());
+        std::vector<Renderable*> sorted;
+        sorted.reserve(_renders.size());
+        std::vector<float> keys;
+        keys.reserve(_renders.size());
+
+        for (auto &[i , r] : _renders) {
+            float dist = Vector3Distance(r->getPos(), getPos());
+            unsorted.emplace(dist, r);
+            keys.emplace_back(dist);
+        }
+        std::sort(keys.begin(), keys.end());
+        for (auto &i : keys)
+            sorted.emplace_back(unsorted[i]);
+        for (int i = keys.size() - 1; i >= 0; i--)
+            sorted[i]->draw();
 
         EndMode3D();
         EndDrawing();
     }
 
-    const RenderIndex Renderer::addRenderable(Renderable *render) {
+    const long long Renderer::addRenderable(Renderable *render) {
         Renderer &inst = instance();
         inst._renders.emplace(inst._nextRenderIndex, render);
         return inst._nextRenderIndex++;
     }
 
-    void Renderer::removeRenderable(const RenderIndex renderIndex)
+    void Renderer::removeRenderable(const long long renderIndex)
     { instance()._renders.erase(renderIndex); }
 
     void Renderer::_term() {

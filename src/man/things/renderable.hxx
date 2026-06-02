@@ -1,8 +1,8 @@
 #pragma once
-#include "render_types.hxx"
+#include "../things/spatial.hxx"
 
 namespace man::render {
-    class Renderable {
+    class Renderable : public things::Spatial {
     public:
         Renderable();
         virtual ~Renderable();
@@ -10,6 +10,6 @@ namespace man::render {
         virtual void draw();
 
     private:
-        RenderIndex _renderIndex;
+        long long _renderIndex;
     };
 }

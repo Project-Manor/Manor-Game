@@ -1,13 +1,11 @@
 #pragma once
-#include "../render/renderable.hxx"
-#include "spatial.hxx"
+#include "renderable.hxx"
 #include <raylib.h>
 #include <string>
 #include <vector>
 
-
 namespace man::things {
-    class Sprite : public Spatial, public man::render::Renderable {
+    class Sprite : public render::Renderable {
     public:
         Sprite();
         void draw() override;

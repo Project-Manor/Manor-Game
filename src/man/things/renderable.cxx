@@ -1,5 +1,5 @@
 #include "renderable.hxx"
-#include "renderer.hxx"
+#include "../render/renderer.hxx"
 
 namespace man::render {
     Renderable::Renderable() :

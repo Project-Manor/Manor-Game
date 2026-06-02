@@ -9,8 +9,13 @@ void game::init() {
 #ifdef DEBUG
     auto debug_cam = man::Things::create<DebugFPCamera>();
 #endif
+    auto magnor = man::Things::create<NPC>();
     auto player = man::Things::create<Player>();
-    auto npc = man::Things::create<NPC>();
+    auto woman = man::Things::create<NPC>();
+    woman->playAnimation("woman");
+    woman->setPos({3, 0, 2});
+    magnor->playAnimation("magnor");
+    magnor->setPos({-2, 0, -3});
 }
 
 void game::proc() {}

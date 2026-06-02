@@ -2,10 +2,13 @@
 
 NPC::NPC() {
     man::things::Sprite::addAnimation({
-        "idle",
+        "woman",
         "res/sprites/woman.png",
         {0}
     });
-
-    _pos = {3, 0, -2};
+    man::things::Sprite::addAnimation({
+        "magnor",
+        "res/sprites/magnor_arachnid.png",
+        {0}
+    });
 }

@@ -8,6 +8,7 @@
 
 !env/
 !env/**/*
+env/container_engine
 
 !src/
 !src/**/*

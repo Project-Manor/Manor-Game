@@ -1,5 +1,6 @@
 #include "game.hxx"
 #include "../man/things/things.hxx"
+#include "modell.hxx"
 #include "room.hxx"
 #include "player.hxx"
 #include "debug_fp_cam.hxx"
@@ -9,13 +10,13 @@ void game::init() {
 #ifdef DEBUG
     auto debug_cam = man::Things::create<DebugFPCamera>();
 #endif
-    auto magnor = man::Things::create<NPC>();
     auto player = man::Things::create<Player>();
     auto woman = man::Things::create<NPC>();
     woman->playAnimation("woman");
     woman->setPos({3, 0, 2});
-    magnor->playAnimation("magnor");
-    magnor->setPos({-2, 0, -3});
+    auto modell = man::Things::create<Modell>();
+    modell->setPos({-2, 0, 1});
+    auto room = man::Things::create<Room>();
 }
 
 void game::proc() {}

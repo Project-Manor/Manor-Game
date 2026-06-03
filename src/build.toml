@@ -26,5 +26,6 @@ sources = [
     "game/player",
     "game/room",
     "game/debug_fp_cam",
-    "game/npc"
+    "game/npc",
+    "game/modell"
 ]

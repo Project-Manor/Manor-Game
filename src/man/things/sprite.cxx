@@ -53,7 +53,7 @@ namespace man::things {
         }
         _texRec.x = _currentFrame * _currentAnim.size;
         float sizeMod = _currentAnim.size / 32.0f;
-        DrawBillboardRec(render::Renderer::getCamera(), _currentAnim.spriteSheet, _texRec, _pos, {(float)_flip * sizeMod, 1 * sizeMod}, WHITE);
+        DrawBillboardRec(render::Renderer::getCamera(), _currentAnim.spriteSheet, _texRec, _pos + Vector3(0, sizeMod / 2, 0), {(float)_flip * sizeMod, 1 * sizeMod}, WHITE);
     }
 
     void Sprite::addAnimation(Sprite::Animation a) {

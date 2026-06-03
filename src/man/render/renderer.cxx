@@ -28,7 +28,7 @@ namespace man::render {
     Renderer::Renderer() :
         _isAlive(true),
         _cam({
-            .position = {0.0f, 0.0f, 1.0f},
+            .position = {0.0f, .5f, 1.0f},
             .target = {.0f, .0f, .0f},
             .up = {.0f, 1.0f, .0f},
             .fovy = 60.0f,
@@ -68,6 +68,9 @@ namespace man::render {
 
         for (auto &[i , r] : _renders) {
             float dist = Vector3Distance(r->getPos(), getPos());
+            while (std::count(keys.begin(), keys.end(), dist) > 0) {
+                dist += 0.0000001f;
+            }
             unsorted.emplace(dist, r);
             keys.emplace_back(dist);
         }
@@ -150,7 +153,7 @@ namespace man::render {
         #define DEG_2_RAD (float)0.017453292519943295769236907684886f
 
         float l = std::cos(vec.x * DEG_2_RAD);
-        float y = std::sin(vec.x * DEG_2_RAD) * l;
+        float y = std::sin(vec.x * DEG_2_RAD);
         float x = std::sin(vec.y * DEG_2_RAD) * l;
         float z = std::cos(vec.y * DEG_2_RAD) * l;
 

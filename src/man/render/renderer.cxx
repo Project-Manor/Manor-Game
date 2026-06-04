@@ -59,7 +59,7 @@ namespace man::render {
         BeginMode3D(_cam);
 
         // Sort renderables by distance from camera.
-        std::unordered_map<float, Renderable*> unsorted;
+        std::unordered_map<float, std::vector<Renderable*>> unsorted;
         unsorted.reserve(_renders.size());
         std::vector<Renderable*> sorted;
         sorted.reserve(_renders.size());
@@ -68,16 +68,23 @@ namespace man::render {
 
         for (auto &[i , r] : _renders) {
             float dist = Vector3Distance(r->getPos(), getPos());
-            while (std::count(keys.begin(), keys.end(), dist) > 0) {
-                dist += 0.0000001f;
+            if (!unsorted.contains(dist))
+                keys.emplace_back(dist);
+            unsorted[dist].emplace_back(r);
+        }
+        for (auto &[i, r] : unsorted) {
+            for (auto &j : r) {
+                Vector3 pos = j->getPos();
             }
-            unsorted.emplace(dist, r);
-            keys.emplace_back(dist);
         }
         std::sort(keys.begin(), keys.end());
-        for (auto &i : keys)
-            sorted.emplace_back(unsorted[i]);
-        for (int i = keys.size() - 1; i >= 0; i--)
+        for (auto &i : keys) {
+            for (auto &j : unsorted[i]) {
+                sorted.emplace_back(j);
+                Vector3 pos = j->getPos();
+            }
+        }
+        for (int i = sorted.size() - 1; i >= 0; i--)
             sorted[i]->draw();
 
         EndMode3D();

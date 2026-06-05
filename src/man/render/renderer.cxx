@@ -19,6 +19,14 @@ namespace man::render {
     const Camera3D &Renderer::getCamera()
     { return instance()._cam; }
 
+    const Renderer::Resolution Renderer::getResolution()
+    { return instance()._res; }
+
+    void Renderer::setResolution(Renderer::Resolution res) {
+        instance()._res = res;
+        SetWindowSize(res.horizontal, res.vertical);
+    }
+
     const int Renderer::getFPS()
     { return GetFPS(); }
 
@@ -34,6 +42,10 @@ namespace man::render {
             .fovy = 60.0f,
             .projection = CAMERA_PERSPECTIVE
         }),
+        _res({
+            .horizontal = 800,
+            .vertical = 450
+        }),
         _uiRenders({}),
         _nextRenderIndex(0),
         _renders({}),
@@ -45,7 +57,8 @@ namespace man::render {
             SetTraceLogLevel(LOG_NONE);
         #endif
 
-        InitWindow(800, 450, "Manor Game");
+        InitWindow(_res.horizontal, _res.vertical, "Manor Game");
+        SetWindowState(FLAG_WINDOW_RESIZABLE);
         setFPS(60);
     }
 

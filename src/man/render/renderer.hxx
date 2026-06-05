@@ -10,11 +10,16 @@
 namespace man::render {
     class Renderer {
     public:
+        struct Resolution { int horizontal; int vertical; };
+
         Renderer(const Renderer&) = delete;
         static Renderer &instance();
         static const bool isAlive();
 
         static const Camera3D &getCamera();
+
+        static const Resolution getResolution();
+        static void setResolution(Resolution res);
 
         static const int getFPS();
         static void setFPS(int value);
@@ -59,6 +64,8 @@ namespace man::render {
 
         bool _isAlive;
         Camera3D _cam;
+
+        Resolution _res;
 
         Vector3 _camRotation;
         Vector3 _camZ;

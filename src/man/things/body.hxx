@@ -1,11 +1,10 @@
 #pragma once
 #include <raylib.h>
 #include <string>
-#include "spatial.hxx"
-#include "../render/renderable.hxx"
+#include "renderable.hxx"
 
 namespace man::things {
-    class Body : public Spatial, public man::render::Renderable {
+    class Body : public render::Renderable {
     public:
         Body();
         void draw() override;
@@ -13,7 +12,8 @@ namespace man::things {
     protected:
         void _initModel (
             std::string modelPath,
-            std::string texturePath
+            std::string texturePath,
+            std::string shaderPath = ""
         );
 
     private:

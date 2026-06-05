@@ -1,8 +1,11 @@
 #include "renderer.hxx"
 #include "raylib.h"
 #include "raymath.h"
-#include "renderable.hxx"
+#include "../things/renderable.hxx"
 #include "cmath"
+#include <unordered_map>
+#include <vector>
+#include <algorithm>
 
 namespace man::render {
     Renderer &Renderer::instance() {
@@ -25,7 +28,7 @@ namespace man::render {
     Renderer::Renderer() :
         _isAlive(true),
         _cam({
-            .position = {0.0f, 0.0f, 1.0f},
+            .position = {0.0f, .5f, 1.0f},
             .target = {.0f, .0f, .0f},
             .up = {.0f, 1.0f, .0f},
             .fovy = 60.0f,
@@ -55,20 +58,46 @@ namespace man::render {
         ClearBackground(SKYBLUE);
         BeginMode3D(_cam);
 
-        for (auto &[index, render] : _renders)
-            render->draw();
+        // Sort renderables by distance from camera.
+        std::unordered_map<float, std::vector<Renderable*>> unsorted;
+        unsorted.reserve(_renders.size());
+        std::vector<Renderable*> sorted;
+        sorted.reserve(_renders.size());
+        std::vector<float> keys;
+        keys.reserve(_renders.size());
+
+        for (auto &[i , r] : _renders) {
+            float dist = Vector3Distance(r->getPos(), getPos());
+            if (!unsorted.contains(dist))
+                keys.emplace_back(dist);
+            unsorted[dist].emplace_back(r);
+        }
+        for (auto &[i, r] : unsorted) {
+            for (auto &j : r) {
+                Vector3 pos = j->getPos();
+            }
+        }
+        std::sort(keys.begin(), keys.end());
+        for (auto &i : keys) {
+            for (auto &j : unsorted[i]) {
+                sorted.emplace_back(j);
+                Vector3 pos = j->getPos();
+            }
+        }
+        for (int i = sorted.size() - 1; i >= 0; i--)
+            sorted[i]->draw();
 
         EndMode3D();
         EndDrawing();
     }
 
-    const RenderIndex Renderer::addRenderable(Renderable *render) {
+    const long long Renderer::addRenderable(Renderable *render) {
         Renderer &inst = instance();
         inst._renders.emplace(inst._nextRenderIndex, render);
         return inst._nextRenderIndex++;
     }
 
-    void Renderer::removeRenderable(const RenderIndex renderIndex)
+    void Renderer::removeRenderable(const long long renderIndex)
     { instance()._renders.erase(renderIndex); }
 
     void Renderer::_term() {
@@ -131,7 +160,7 @@ namespace man::render {
         #define DEG_2_RAD (float)0.017453292519943295769236907684886f
 
         float l = std::cos(vec.x * DEG_2_RAD);
-        float y = std::sin(vec.x * DEG_2_RAD) * l;
+        float y = std::sin(vec.x * DEG_2_RAD);
         float x = std::sin(vec.y * DEG_2_RAD) * l;
         float z = std::cos(vec.y * DEG_2_RAD) * l;
 

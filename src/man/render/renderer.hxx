@@ -2,8 +2,7 @@
 #include <unordered_map>
 #include <raylib.h>
 #include "../core.hxx"
-#include "render_types.hxx"
-#include "renderable.hxx"
+#include "../things/renderable.hxx"
 
 namespace man::render {
     class Renderer {
@@ -17,8 +16,8 @@ namespace man::render {
         static const int getFPS();
         static void setFPS(int value);
 
-        static const RenderIndex addRenderable(Renderable *render);
-        static void removeRenderable(const RenderIndex renderIndex);
+        static const long long addRenderable(Renderable *render);
+        static void removeRenderable(const long long renderIndex);
 
         const float getFOV();
         void setFOV(float val);
@@ -59,9 +58,9 @@ namespace man::render {
         Vector3 _camZ;
         Vector3 _camX;
 
-        RenderIndex _nextRenderIndex;
+        long long _nextRenderIndex;
         std::unordered_map <
-            RenderIndex,
+            long long,
             Renderable*
         > _renders;
     };

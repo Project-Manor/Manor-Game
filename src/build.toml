@@ -14,17 +14,18 @@ sources = [
     "man/str_colour",
 
     "man/render/renderer",
-    "man/render/renderable",
 
     "man/things/things",
     "man/things/thing",
     "man/things/sprite",
     "man/things/spatial",
     "man/things/body",
+    "man/things/renderable",
 
     "game/game",
     "game/player",
     "game/room",
     "game/debug_fp_cam",
-    "game/npc"
+    "game/npc",
+    "game/modell"
 ]

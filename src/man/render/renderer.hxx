@@ -1,7 +1,10 @@
 #pragma once
+#include <array>
+#include <unordered_set>
 #include <unordered_map>
 #include <raylib.h>
 #include "../core.hxx"
+#include "ui_renderable.hxx"
 #include "../things/renderable.hxx"
 
 namespace man::render {
@@ -15,6 +18,9 @@ namespace man::render {
 
         static const int getFPS();
         static void setFPS(int value);
+
+        static void addUIRenderable(const int layer, UIRenderable *render);
+        static void removeUIRenderable(const int layer, UIRenderable *render);
 
         static const long long addRenderable(Renderable *render);
         static void removeRenderable(const long long renderIndex);
@@ -57,6 +63,11 @@ namespace man::render {
         Vector3 _camRotation;
         Vector3 _camZ;
         Vector3 _camX;
+
+        std::array <
+            std::unordered_set<UIRenderable*>,
+            16
+        > _uiRenders;
 
         long long _nextRenderIndex;
         std::unordered_map <

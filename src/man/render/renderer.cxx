@@ -34,6 +34,7 @@ namespace man::render {
             .fovy = 60.0f,
             .projection = CAMERA_PERSPECTIVE
         }),
+        _uiRenders({}),
         _nextRenderIndex(0),
         _renders({}),
         _camRotation({0}),
@@ -56,6 +57,11 @@ namespace man::render {
 
         BeginDrawing();
         ClearBackground(SKYBLUE);
+
+        for (std::unordered_set<UIRenderable*> &set : _uiRenders)
+            for (UIRenderable *render : set)
+                render->draw();
+
         BeginMode3D(_cam);
 
         // Sort renderables by distance from camera.
@@ -90,6 +96,12 @@ namespace man::render {
         EndMode3D();
         EndDrawing();
     }
+
+    void Renderer::addUIRenderable(const int layer, UIRenderable *render)
+    { instance()._uiRenders[layer].emplace(render); }
+
+    void Renderer::removeUIRenderable(const int layer, UIRenderable *render)
+    { instance()._uiRenders[layer].erase(render); }
 
     const long long Renderer::addRenderable(Renderable *render) {
         Renderer &inst = instance();

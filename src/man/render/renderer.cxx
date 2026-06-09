@@ -19,6 +19,17 @@ namespace man::render {
     const Camera3D &Renderer::getCamera()
     { return instance()._cam; }
 
+    const Renderer::Resolution Renderer::getResolution() {
+        return {
+            GetScreenWidth(),
+            GetScreenHeight()
+        };
+    }
+
+    void Renderer::setResolution(Renderer::Resolution res) {
+        SetWindowSize(res.horizontal, res.vertical);
+    }
+
     const int Renderer::getFPS()
     { return GetFPS(); }
 
@@ -34,6 +45,7 @@ namespace man::render {
             .fovy = 60.0f,
             .projection = CAMERA_PERSPECTIVE
         }),
+        _uiRenders({}),
         _nextRenderIndex(0),
         _renders({}),
         _camRotation({0}),
@@ -45,6 +57,7 @@ namespace man::render {
         #endif
 
         InitWindow(800, 450, "Manor Game");
+        SetWindowState(FLAG_WINDOW_RESIZABLE);
         setFPS(60);
     }
 
@@ -88,8 +101,19 @@ namespace man::render {
             sorted[i]->draw();
 
         EndMode3D();
+
+        for (std::unordered_set<UIRenderable*> &set : _uiRenders)
+            for (UIRenderable *render : set)
+                render->draw();
+
         EndDrawing();
     }
+
+    void Renderer::addUIRenderable(const int layer, UIRenderable *render)
+    { instance()._uiRenders[layer].emplace(render); }
+
+    void Renderer::removeUIRenderable(const int layer, UIRenderable *render)
+    { instance()._uiRenders[layer].erase(render); }
 
     const long long Renderer::addRenderable(Renderable *render) {
         Renderer &inst = instance();

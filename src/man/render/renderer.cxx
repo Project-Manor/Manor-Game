@@ -191,8 +191,8 @@ namespace man::render {
         float xx = std::sin((vec.y - 90) * DEG_2_RAD) * l;
         float zx = std::cos((vec.y - 90) * DEG_2_RAD) * l;
 
-        _camZ = Vector3Normalize({x, y, z});
-        _camX = Vector3Normalize({xx, y, zx});
+        instance()._camZ = Vector3Normalize({x, y, z});
+        instance()._camX = Vector3Normalize({xx, y, zx});
 
         instance()._camRotation = v;
         instance()._cam.target = Vector3Add(getPos(), {x, y, z});

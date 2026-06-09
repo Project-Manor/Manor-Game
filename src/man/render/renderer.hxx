@@ -30,27 +30,27 @@ namespace man::render {
         static const long long addRenderable(Renderable *render);
         static void removeRenderable(const long long renderIndex);
 
-        const float getFOV();
-        void setFOV(float val);
+        static const float getFOV();
+        static void setFOV(float val);
 
-        const float getProjection();
-        void setProjection(int val);
+        static const float getProjection();
+        static void setProjection(int val);
 
         // Position
         static const float getPosX();
-        void setPosX(float val);
+        static void setPosX(float val);
 
         static const float getPosY();
-        void setPosY(float val);
+        static void setPosY(float val);
 
         static const float getPosZ();
-        void setPosZ(float val);
+        static void setPosZ(float val);
 
         static const Vector3 getPos();
-        void setPos(Vector3 vec);
+        static void setPos(Vector3 vec);
 
         static const Vector3 getRot();
-        void setRot(Vector3 vec);
+        static void setRot(Vector3 vec);
 
         static const Vector3 getCamZ();
         static const Vector3 getCamX();

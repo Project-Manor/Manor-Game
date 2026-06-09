@@ -12,3 +12,6 @@ env/container_engine
 
 !src/
 !src/**/*
+
+!res/
+!res/**/*

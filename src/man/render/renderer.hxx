@@ -65,8 +65,6 @@ namespace man::render {
         bool _isAlive;
         Camera3D _cam;
 
-        Resolution _res;
-
         Vector3 _camRotation;
         Vector3 _camZ;
         Vector3 _camX;

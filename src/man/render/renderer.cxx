@@ -19,11 +19,14 @@ namespace man::render {
     const Camera3D &Renderer::getCamera()
     { return instance()._cam; }
 
-    const Renderer::Resolution Renderer::getResolution()
-    { return instance()._res; }
+    const Renderer::Resolution Renderer::getResolution() {
+        return {
+            GetScreenWidth(),
+            GetScreenHeight()
+        };
+    }
 
     void Renderer::setResolution(Renderer::Resolution res) {
-        instance()._res = res;
         SetWindowSize(res.horizontal, res.vertical);
     }
 
@@ -42,10 +45,6 @@ namespace man::render {
             .fovy = 60.0f,
             .projection = CAMERA_PERSPECTIVE
         }),
-        _res({
-            .horizontal = 800,
-            .vertical = 450
-        }),
         _uiRenders({}),
         _nextRenderIndex(0),
         _renders({}),
@@ -57,7 +56,7 @@ namespace man::render {
             SetTraceLogLevel(LOG_NONE);
         #endif
 
-        InitWindow(_res.horizontal, _res.vertical, "Manor Game");
+        InitWindow(800, 450, "Manor Game");
         SetWindowState(FLAG_WINDOW_RESIZABLE);
         setFPS(60);
     }
@@ -70,11 +69,6 @@ namespace man::render {
 
         BeginDrawing();
         ClearBackground(SKYBLUE);
-
-        for (std::unordered_set<UIRenderable*> &set : _uiRenders)
-            for (UIRenderable *render : set)
-                render->draw();
-
         BeginMode3D(_cam);
 
         // Sort renderables by distance from camera.
@@ -107,6 +101,11 @@ namespace man::render {
             sorted[i]->draw();
 
         EndMode3D();
+
+        for (std::unordered_set<UIRenderable*> &set : _uiRenders)
+            for (UIRenderable *render : set)
+                render->draw();
+
         EndDrawing();
     }
 

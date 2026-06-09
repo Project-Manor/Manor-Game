@@ -14,6 +14,7 @@ sources = [
     "man/str_colour",
 
     "man/render/renderer",
+    "man/render/ui_renderable",
 
     "man/things/things",
     "man/things/thing",
@@ -21,6 +22,9 @@ sources = [
     "man/things/spatial",
     "man/things/body",
     "man/things/renderable",
+
+    "man/things/ui/ui_element",
+    "man/things/ui/ui_sprite",
 
     "game/game",
     "game/player",

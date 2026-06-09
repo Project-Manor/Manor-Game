@@ -1,4 +1,5 @@
 #pragma once
+#include <raylib.h>
 #include "../thing.hxx"
 
 namespace man::things::ui {
@@ -26,6 +27,11 @@ namespace man::things::ui {
             float vertical;
         };
 
+        struct Position {
+            int horizontal;
+            int vertical;
+        };
+
         auto getHorizontalAnchor() const -> const Anchor::Horizontal;
         auto getVerticalAnchor() const -> const Anchor::Vertical;
         auto getAnchor() const -> const Anchor;
@@ -38,9 +44,13 @@ namespace man::things::ui {
         auto setVerticalAnchor(Anchor::Vertical vertical) const -> const UIElement&;
         auto setAnchor(Anchor anchor) const -> const UIElement&;
 
-        auto setHorizontalOffset(float percentile) const -> const UIElement&;
-        auto setVerticalOffset(float percentile) const -> const UIElement&;
+        auto setHorizontalOffset(float value) const -> const UIElement&;
+        auto setVerticalOffset(float value) const -> const UIElement&;
         auto setOffset(Offset offset) const -> const UIElement&;
+
+        auto getCalcHorizontalPosition(const Texture &tex) const -> const int;
+        auto getCalcVerticalPosition(const Texture &tex) const -> const int;
+        auto getCalcPosition(const Texture &tex) const -> const Position;
 
     private:
         mutable Anchor::Horizontal _hAnchor;

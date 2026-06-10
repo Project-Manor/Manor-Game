@@ -13,7 +13,8 @@ sources = [
     "man/time",
     "man/str_colour",
 
-    "man/render/renderer",
+    "man/render/renderer_pub",
+    "man/render/renderer_priv",
     "man/render/ui_renderable",
 
     "man/things/things",

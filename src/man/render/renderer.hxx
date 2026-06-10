@@ -62,6 +62,8 @@ namespace man::render {
         void _proc();
         void _term();
 
+        void _drawRenders();
+
         bool _isAlive;
         Camera3D _cam;
 
@@ -69,15 +71,15 @@ namespace man::render {
         Vector3 _camZ;
         Vector3 _camX;
 
-        std::array <
-            std::unordered_set<UIRenderable*>,
-            16
-        > _uiRenders;
-
         long long _nextRenderIndex;
         std::unordered_map <
             long long,
             Renderable*
         > _renders;
+
+        std::array <
+            std::unordered_set<UIRenderable*>,
+            16
+        > _uiRenders;
     };
 }

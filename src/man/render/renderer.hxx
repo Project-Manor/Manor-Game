@@ -7,6 +7,9 @@
 #include "ui_renderable.hxx"
 #include "../things/renderable.hxx"
 
+#define DEFAULT_HORIZONTAL_RESOLUTION 800
+#define DEFAULT_VERTICAL_RESOLUTION 450
+
 namespace man::render {
     class Renderer {
     public:
@@ -71,11 +74,14 @@ namespace man::render {
         Vector3 _camZ;
         Vector3 _camX;
 
+        RenderTexture2D _worldRenderTex;
+        RenderTexture2D _uiRenderTex;
+
         long long _nextRenderIndex;
         std::unordered_map <
             long long,
             Renderable*
-        > _renders;
+        > _worldRenders;
 
         std::array <
             std::unordered_set<UIRenderable*>,

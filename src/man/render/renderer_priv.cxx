@@ -16,9 +16,11 @@ namespace man::render {
             .fovy = 60.0f,
             .projection = CAMERA_PERSPECTIVE
         }),
-        _uiRenders({}),
+        _worldRenderTex({0}),
+        _uiRenderTex({0}),
         _nextRenderIndex(0),
-        _renders({}),
+        _worldRenders({}),
+        _uiRenders({}),
         _camRotation({0}),
         _camZ({0}),
         _camX({0})
@@ -27,9 +29,20 @@ namespace man::render {
             SetTraceLogLevel(LOG_NONE);
         #endif
 
-        InitWindow(800, 450, "Manor Game");
+        InitWindow (
+            DEFAULT_HORIZONTAL_RESOLUTION,
+            DEFAULT_VERTICAL_RESOLUTION,
+            "Manor Game"
+        );
+
         SetWindowState(FLAG_WINDOW_RESIZABLE);
         setFPS(60);
+
+        _worldRenderTex = LoadRenderTexture(1920, 1080);
+        _uiRenderTex = LoadRenderTexture (
+            DEFAULT_HORIZONTAL_RESOLUTION,
+            DEFAULT_VERTICAL_RESOLUTION
+        );
     }
 
     void Renderer::_proc() {
@@ -38,21 +51,57 @@ namespace man::render {
             return;
         }
 
-        BeginDrawing();
-        ClearBackground(SKYBLUE);
+        BeginTextureMode(_worldRenderTex); {
+            BeginMode3D(_cam); {
+                ClearBackground(SKYBLUE);
+                _drawRenders();
+                EndMode3D();
+            }
 
-        BeginMode3D(_cam);
-        _drawRenders();
-        EndMode3D();
+            EndTextureMode();
+        }
 
-        for (std::unordered_set<UIRenderable*> &set : _uiRenders)
-            for (UIRenderable *render : set)
-                render->draw();
+        BeginTextureMode(_uiRenderTex); {
+            ClearBackground(BLANK);
 
-        EndDrawing();
+            for (std::unordered_set<UIRenderable*> &set : _uiRenders)
+                for (UIRenderable *render : set)
+                    render->draw();
+
+            EndTextureMode();
+        }
+
+        auto drawTexPro = [](RenderTexture2D rt) {
+            DrawTexturePro (
+                rt.texture,
+                {
+                    0.0f,
+                    0.0f,
+                    (float)rt.texture.width,
+                    -(float)rt.texture.height
+                },
+                {
+                    0.0f,
+                    0.0f,
+                    (float)getResolution().horizontal,
+                    (float)getResolution().vertical
+                },
+                {0.0f, 0.0f},
+                0.0f,
+                WHITE
+            );
+        };
+
+        BeginDrawing(); {
+            drawTexPro(_worldRenderTex);
+            drawTexPro(_uiRenderTex);
+            EndDrawing();
+        }
     }
 
     void Renderer::_term() {
+        UnloadRenderTexture(_worldRenderTex);
+        UnloadRenderTexture(_uiRenderTex);
         CloseWindow();
         instance()._isAlive = false;
     }
@@ -60,13 +109,13 @@ namespace man::render {
     void Renderer::_drawRenders() {
         // Sort renderables by distance from camera.
         std::unordered_map<float, std::vector<Renderable*>> unsorted;
-        unsorted.reserve(_renders.size());
+        unsorted.reserve(_worldRenders.size());
         std::vector<Renderable*> sorted;
-        sorted.reserve(_renders.size());
+        sorted.reserve(_worldRenders.size());
         std::vector<float> keys;
-        keys.reserve(_renders.size());
+        keys.reserve(_worldRenders.size());
 
-        for (auto &[i , r] : _renders) {
+        for (auto &[i , r] : _worldRenders) {
             float dist = Vector3Distance(r->getPos(), getPos());
             if (!unsorted.contains(dist))
                 keys.emplace_back(dist);

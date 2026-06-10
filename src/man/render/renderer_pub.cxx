@@ -26,6 +26,12 @@ namespace man::render {
 
     void Renderer::setResolution(Renderer::Resolution res) {
         SetWindowSize(res.horizontal, res.vertical);
+        Renderer &inst = instance();
+
+        if (IsRenderTextureValid(inst._uiRenderTex)) {
+            inst._uiRenderTex.texture.width = res.horizontal;
+            inst._uiRenderTex.texture.height = res.vertical;
+        }
     }
 
     const int Renderer::getFPS()
@@ -42,12 +48,12 @@ namespace man::render {
 
     const long long Renderer::addRenderable(Renderable *render) {
         Renderer &inst = instance();
-        inst._renders.emplace(inst._nextRenderIndex, render);
+        inst._worldRenders.emplace(inst._nextRenderIndex, render);
         return inst._nextRenderIndex++;
     }
 
     void Renderer::removeRenderable(const long long renderIndex)
-    { instance()._renders.erase(renderIndex); }
+    { instance()._worldRenders.erase(renderIndex); }
 
     // Camera FOV
     const float Renderer::getFOV()

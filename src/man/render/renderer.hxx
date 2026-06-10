@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <utility>
 #include <unordered_set>
 #include <unordered_map>
 #include <raylib.h>
@@ -9,6 +10,8 @@
 
 #define DEFAULT_HORIZONTAL_RESOLUTION 800
 #define DEFAULT_VERTICAL_RESOLUTION 450
+
+#define WORLD_RENDER_RESOLUTION_MULTIPLIER 1.0f
 
 namespace man::render {
     class Renderer {
@@ -23,6 +26,9 @@ namespace man::render {
 
         static const Resolution getResolution();
         static void setResolution(Resolution res);
+
+        static std::pair<int, int> getWorldRenderTextureSize();
+        static std::pair<int, int> getUIRenderTextureSize();
 
         static const int getFPS();
         static void setFPS(int value);
@@ -65,7 +71,8 @@ namespace man::render {
         void _proc();
         void _term();
 
-        void _drawRenders();
+        void _updateRenderTexRes();
+        void _drawWorldRenders();
 
         bool _isAlive;
         Camera3D _cam;

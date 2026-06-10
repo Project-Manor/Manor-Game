@@ -26,12 +26,21 @@ namespace man::render {
 
     void Renderer::setResolution(Renderer::Resolution res) {
         SetWindowSize(res.horizontal, res.vertical);
-        Renderer &inst = instance();
+        instance()._updateRenderTexRes();
+    }
 
-        if (IsRenderTextureValid(inst._uiRenderTex)) {
-            inst._uiRenderTex.texture.width = res.horizontal;
-            inst._uiRenderTex.texture.height = res.vertical;
-        }
+    std::pair<int, int> Renderer::getWorldRenderTextureSize() {
+        return {
+            instance()._worldRenderTex.texture.width,
+            instance()._worldRenderTex.texture.height
+        };
+    }
+
+    std::pair<int, int> Renderer::getUIRenderTextureSize() {
+        return {
+            instance()._uiRenderTex.texture.width,
+            instance()._uiRenderTex.texture.height
+        };
     }
 
     const int Renderer::getFPS()

@@ -38,7 +38,11 @@ namespace man::render {
         SetWindowState(FLAG_WINDOW_RESIZABLE);
         setFPS(60);
 
-        _worldRenderTex = LoadRenderTexture(1920, 1080);
+        _worldRenderTex = LoadRenderTexture (
+            DEFAULT_HORIZONTAL_RESOLUTION * WORLD_RENDER_RESOLUTION_MULTIPLIER,
+            DEFAULT_VERTICAL_RESOLUTION * WORLD_RENDER_RESOLUTION_MULTIPLIER
+        );
+
         _uiRenderTex = LoadRenderTexture (
             DEFAULT_HORIZONTAL_RESOLUTION,
             DEFAULT_VERTICAL_RESOLUTION
@@ -51,10 +55,23 @@ namespace man::render {
             return;
         }
 
+        if (IsWindowResized())
+            _updateRenderTexRes();
+
+        if (IsKeyPressed(KEY_ONE)) {
+            setResolution({854, 480});
+        }
+        else if (IsKeyPressed(KEY_TWO)) {
+            setResolution({1280, 720});
+        }
+        else if (IsKeyPressed(KEY_THREE)) {
+            setResolution({1920, 1080});
+        }
+
         BeginTextureMode(_worldRenderTex); {
             BeginMode3D(_cam); {
                 ClearBackground(SKYBLUE);
-                _drawRenders();
+                _drawWorldRenders();
                 EndMode3D();
             }
 
@@ -93,6 +110,7 @@ namespace man::render {
         };
 
         BeginDrawing(); {
+            ClearBackground(BLANK);
             drawTexPro(_worldRenderTex);
             drawTexPro(_uiRenderTex);
             EndDrawing();
@@ -106,7 +124,23 @@ namespace man::render {
         instance()._isAlive = false;
     }
 
-    void Renderer::_drawRenders() {
+    void Renderer::_updateRenderTexRes() {
+        auto r = getResolution();
+
+        UnloadRenderTexture(_worldRenderTex);
+        _worldRenderTex = LoadRenderTexture (
+            r.horizontal * WORLD_RENDER_RESOLUTION_MULTIPLIER,
+            r.vertical * WORLD_RENDER_RESOLUTION_MULTIPLIER
+        );
+
+        UnloadRenderTexture(_uiRenderTex);
+        _uiRenderTex = LoadRenderTexture (
+            r.horizontal,
+            r.vertical
+        );
+    }
+
+    void Renderer::_drawWorldRenders() {
         // Sort renderables by distance from camera.
         std::unordered_map<float, std::vector<Renderable*>> unsorted;
         unsorted.reserve(_worldRenders.size());

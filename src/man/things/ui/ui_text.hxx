@@ -13,18 +13,19 @@ namespace man::things::ui {
         UIRenderable_initUIRenderableTemplate
         void _initUIText (
             std::string str = "parasite",
-            Font font = GetFontDefault(),
             float fontSize = 64,
             float spacing = 5,
-            Color clr = WHITE
+            Color clr = WHITE,
+            std::string fontPath = "parasite"
         );
 
     private:
         std::string _str;
-        Font _font;
         float _fontSize;
         float _spacing;
         Color _clr;
+        Font _font;
+        bool _isFontDefault;
     };
 }
 

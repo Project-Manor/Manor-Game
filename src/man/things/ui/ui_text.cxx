@@ -2,7 +2,10 @@
 #include <raylib.h>
 
 namespace man::things::ui {
-    UIText::~UIText() = default;
+    UIText::~UIText() {
+        if (_isFontDefault) return;
+        UnloadFont(_font);
+    }
 
     void UIText::draw() {
         DrawTextEx (

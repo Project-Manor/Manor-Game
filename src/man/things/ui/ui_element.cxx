@@ -68,7 +68,7 @@ namespace man::things::ui {
     }
 
     auto UIElement::getCalcHorizontalPosition(const Texture &tex) const -> const int {
-        const int hRes = man::render::Renderer::getResolution().horizontal;
+        const int hRes = man::render::Renderer::getUIRenderTextureSize().first;
         const float texMod = (float)tex.width / 2;
 
         switch (_hAnchor) {
@@ -84,7 +84,7 @@ namespace man::things::ui {
     }
 
     auto UIElement::getCalcVerticalPosition(const Texture &tex) const -> const int {
-        const int vRes = man::render::Renderer::getResolution().vertical;
+        const int vRes = man::render::Renderer::getUIRenderTextureSize().second;
         const float texMod = (float)tex.height / 2;
 
         switch (_vAnchor) {

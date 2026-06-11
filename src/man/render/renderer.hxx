@@ -1,11 +1,17 @@
 #pragma once
 #include <array>
+#include <utility>
 #include <unordered_set>
 #include <unordered_map>
 #include <raylib.h>
 #include "../core.hxx"
 #include "ui_renderable.hxx"
 #include "../things/renderable.hxx"
+
+#define DEFAULT_HORIZONTAL_RESOLUTION 800
+#define DEFAULT_VERTICAL_RESOLUTION 450
+
+#define WORLD_RENDER_RESOLUTION_MULTIPLIER 1.0f
 
 namespace man::render {
     class Renderer {
@@ -21,6 +27,9 @@ namespace man::render {
         static const Resolution getResolution();
         static void setResolution(Resolution res);
 
+        static std::pair<int, int> getWorldRenderTextureSize();
+        static std::pair<int, int> getUIRenderTextureSize();
+
         static const int getFPS();
         static void setFPS(int value);
 
@@ -30,27 +39,27 @@ namespace man::render {
         static const long long addRenderable(Renderable *render);
         static void removeRenderable(const long long renderIndex);
 
-        const float getFOV();
-        void setFOV(float val);
+        static const float getFOV();
+        static void setFOV(float val);
 
-        const float getProjection();
-        void setProjection(int val);
+        static const float getProjection();
+        static void setProjection(int val);
 
         // Position
         static const float getPosX();
-        void setPosX(float val);
+        static void setPosX(float val);
 
         static const float getPosY();
-        void setPosY(float val);
+        static void setPosY(float val);
 
         static const float getPosZ();
-        void setPosZ(float val);
+        static void setPosZ(float val);
 
         static const Vector3 getPos();
-        void setPos(Vector3 vec);
+        static void setPos(Vector3 vec);
 
         static const Vector3 getRot();
-        void setRot(Vector3 vec);
+        static void setRot(Vector3 vec);
 
         static const Vector3 getCamZ();
         static const Vector3 getCamX();
@@ -62,6 +71,9 @@ namespace man::render {
         void _proc();
         void _term();
 
+        void _updateRenderTexRes();
+        void _drawWorldRenders();
+
         bool _isAlive;
         Camera3D _cam;
 
@@ -69,15 +81,18 @@ namespace man::render {
         Vector3 _camZ;
         Vector3 _camX;
 
-        std::array <
-            std::unordered_set<UIRenderable*>,
-            16
-        > _uiRenders;
+        RenderTexture2D _worldRenderTex;
+        RenderTexture2D _uiRenderTex;
 
         long long _nextRenderIndex;
         std::unordered_map <
             long long,
             Renderable*
-        > _renders;
+        > _worldRenders;
+
+        std::array <
+            std::unordered_set<UIRenderable*>,
+            16
+        > _uiRenders;
     };
 }

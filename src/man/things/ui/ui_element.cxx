@@ -24,10 +24,10 @@ namespace man::things::ui {
         };
     }
 
-    auto UIElement::getHorizontalOffset() const -> const float
+    auto UIElement::getHorizontalOffset() const -> const int
     { return _hOffset; }
 
-    auto UIElement::getVerticalOffset() const -> const float
+    auto UIElement::getVerticalOffset() const -> const int
     { return _vOffset; }
 
     auto UIElement::getOffset() const -> const Offset {
@@ -52,12 +52,12 @@ namespace man::things::ui {
         return setVerticalAnchor(anchor.vertical);
     }
 
-    auto UIElement::setHorizontalOffset(float value) const -> const UIElement& {
+    auto UIElement::setHorizontalOffset(int value) const -> const UIElement& {
         _hOffset = value;
         return *this;
     }
 
-    auto UIElement::setVerticalOffset(float value) const -> const UIElement& {
+    auto UIElement::setVerticalOffset(int value) const -> const UIElement& {
         _vOffset = value;
         return *this;
     }
@@ -68,34 +68,34 @@ namespace man::things::ui {
     }
 
     auto UIElement::getCalcHorizontalPosition(const Texture &tex) const -> const int {
-        const int hRes = man::render::Renderer::getUIRenderTextureSize().first;
-        const float texMod = (float)tex.width / 2;
+        const auto res = man::render::Renderer::getUIRenderTextureSize();
+        const float offset = (res.second / (float)1080) * _hOffset;
 
         switch (_hAnchor) {
+            case Anchor::Horizontal::Center:
+                return ((float)res.first / 2) + offset - ((float)tex.width / 2);
+
             case Anchor::Horizontal::West:
-                return _hOffset - texMod;
+                return offset;
 
             case Anchor::Horizontal::East:
-                return hRes - _hOffset - texMod;
-
-            case Anchor::Horizontal::Center:
-                return ((float)hRes / 2) + _hOffset - texMod;
+                return res.first + offset - (float)tex.width;
         }
     }
 
     auto UIElement::getCalcVerticalPosition(const Texture &tex) const -> const int {
-        const int vRes = man::render::Renderer::getUIRenderTextureSize().second;
-        const float texMod = (float)tex.height / 2;
+        const auto res = man::render::Renderer::getUIRenderTextureSize();
+        const float offset = (res.second / (float)1080) * _vOffset;
 
         switch (_vAnchor) {
+            case Anchor::Vertical::Center:
+                return ((float)res.second / 2) + offset - ((float)tex.height / 2);
+
             case Anchor::Vertical::North:
-                return _vOffset - texMod;
+                return offset;
 
             case Anchor::Vertical::South:
-                return vRes - _vOffset - texMod;
-
-            case Anchor::Vertical::Center:
-                return ((float)vRes / 2) + _vOffset - texMod;
+                return res.second + offset - (float)tex.height;
         }
     }
 

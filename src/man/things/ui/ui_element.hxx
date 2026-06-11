@@ -23,8 +23,8 @@ namespace man::things::ui {
         };
 
         struct Offset {
-            float horizontal;
-            float vertical;
+            int horizontal;
+            int vertical;
         };
 
         struct Position {
@@ -36,16 +36,16 @@ namespace man::things::ui {
         auto getVerticalAnchor() const -> const Anchor::Vertical;
         auto getAnchor() const -> const Anchor;
 
-        auto getHorizontalOffset() const -> const float;
-        auto getVerticalOffset() const -> const float;
+        auto getHorizontalOffset() const -> const int;
+        auto getVerticalOffset() const -> const int;
         auto getOffset() const -> const Offset;
 
         auto setHorizontalAnchor(Anchor::Horizontal horizontal) const -> const UIElement&;
         auto setVerticalAnchor(Anchor::Vertical vertical) const -> const UIElement&;
         auto setAnchor(Anchor anchor) const -> const UIElement&;
 
-        auto setHorizontalOffset(float value) const -> const UIElement&;
-        auto setVerticalOffset(float value) const -> const UIElement&;
+        auto setHorizontalOffset(int value) const -> const UIElement&;
+        auto setVerticalOffset(int value) const -> const UIElement&;
         auto setOffset(Offset offset) const -> const UIElement&;
 
         auto getCalcHorizontalPosition(const Texture &tex) const -> const int;
@@ -55,7 +55,7 @@ namespace man::things::ui {
     private:
         mutable Anchor::Horizontal _hAnchor;
         mutable Anchor::Vertical _vAnchor;
-        mutable float _hOffset;
-        mutable float _vOffset;
+        mutable int _hOffset;
+        mutable int _vOffset;
     };
 }

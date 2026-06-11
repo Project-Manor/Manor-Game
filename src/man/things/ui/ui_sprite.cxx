@@ -9,8 +9,8 @@ namespace man::things::ui {
     void UISprite::draw() {
         DrawTexture (
             _tex,
-            getCalcHorizontalPosition(_tex),
-            getCalcVerticalPosition(_tex),
+            getCalcHorizontalPosition(),
+            getCalcVerticalPosition(),
             WHITE
         );
     }

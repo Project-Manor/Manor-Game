@@ -8,18 +8,17 @@ namespace man::things::ui {
         UIElement();
         virtual ~UIElement();
 
-        struct Anchor {
-            enum class Horizontal {
-                Center,
-                West,
-                East
-            } horizontal;
+        enum class AnchorPoint {
+            Center,
+            West,
+            East,
+            North,
+            South
+        };
 
-            enum class Vertical {
-                Center,
-                North,
-                South
-            } vertical;
+        struct Anchor {
+            AnchorPoint horizontal;
+            AnchorPoint vertical;
         };
 
         struct Offset {
@@ -32,30 +31,37 @@ namespace man::things::ui {
             int vertical;
         };
 
-        auto getHorizontalAnchor() const -> const Anchor::Horizontal;
-        auto getVerticalAnchor() const -> const Anchor::Vertical;
+        struct Size {
+            int horizontal;
+            int vertical;
+        };
+
+        auto getHorizontalAnchor() const -> const AnchorPoint;
+        auto getVerticalAnchor() const -> const AnchorPoint;
         auto getAnchor() const -> const Anchor;
 
         auto getHorizontalOffset() const -> const int;
         auto getVerticalOffset() const -> const int;
         auto getOffset() const -> const Offset;
 
-        auto setHorizontalAnchor(Anchor::Horizontal horizontal) const -> const UIElement&;
-        auto setVerticalAnchor(Anchor::Vertical vertical) const -> const UIElement&;
+        auto setHorizontalAnchor(AnchorPoint horizontal) const -> const UIElement&;
+        auto setVerticalAnchor(AnchorPoint vertical) const -> const UIElement&;
         auto setAnchor(Anchor anchor) const -> const UIElement&;
 
         auto setHorizontalOffset(int value) const -> const UIElement&;
         auto setVerticalOffset(int value) const -> const UIElement&;
         auto setOffset(Offset offset) const -> const UIElement&;
 
-        auto getCalcHorizontalPosition(const Texture &tex) const -> const int;
-        auto getCalcVerticalPosition(const Texture &tex) const -> const int;
-        auto getCalcPosition(const Texture &tex) const -> const Position;
+        auto getCalcHorizontalPosition() const -> const int;
+        auto getCalcVerticalPosition() const -> const int;
+        auto getCalcPosition() const -> const Position;
+
+    protected:
+        auto _setElementSize(Size size) -> void;
 
     private:
-        mutable Anchor::Horizontal _hAnchor;
-        mutable Anchor::Vertical _vAnchor;
-        mutable int _hOffset;
-        mutable int _vOffset;
+        mutable Anchor _anchor;
+        mutable Offset _offset;
+        mutable Size _size;
     };
 }

@@ -71,7 +71,9 @@ namespace man::render {
         BeginTextureMode(_worldRenderTex); {
             BeginMode3D(_cam); {
                 ClearBackground(SKYBLUE);
-                _drawWorldRenders();
+                for (auto &[i , r] : _worldRenders) {
+                    r->draw();
+                }
                 EndMode3D();
             }
 
@@ -140,34 +142,34 @@ namespace man::render {
         );
     }
 
-    void Renderer::_drawWorldRenders() {
-        // Sort renderables by distance from camera.
-        std::unordered_map<float, std::vector<Renderable*>> unsorted;
-        unsorted.reserve(_worldRenders.size());
-        std::vector<Renderable*> sorted;
-        sorted.reserve(_worldRenders.size());
-        std::vector<float> keys;
-        keys.reserve(_worldRenders.size());
+    // void Renderer::_drawWorldRenders() {
+    //     // Sort renderables by distance from camera.
+    //     std::unordered_map<float, std::vector<Renderable*>> unsorted;
+    //     unsorted.reserve(_worldRenders.size());
+    //     std::vector<Renderable*> sorted;
+    //     sorted.reserve(_worldRenders.size());
+    //     std::vector<float> keys;
+    //     keys.reserve(_worldRenders.size());
 
-        for (auto &[i , r] : _worldRenders) {
-            float dist = Vector3Distance(r->getPos(), getPos());
-            if (!unsorted.contains(dist))
-                keys.emplace_back(dist);
-            unsorted[dist].emplace_back(r);
-        }
-        for (auto &[i, r] : unsorted) {
-            for (auto &j : r) {
-                Vector3 pos = j->getPos();
-            }
-        }
-        std::sort(keys.begin(), keys.end());
-        for (auto &i : keys) {
-            for (auto &j : unsorted[i]) {
-                sorted.emplace_back(j);
-                Vector3 pos = j->getPos();
-            }
-        }
-        for (int i = sorted.size() - 1; i >= 0; i--)
-            sorted[i]->draw();
-    }
+    //     for (auto &[i , r] : _worldRenders) {
+    //         float dist = Vector3Distance(r->getPos(), getPos());
+    //         if (!unsorted.contains(dist))
+    //             keys.emplace_back(dist);
+    //         unsorted[dist].emplace_back(r);
+    //     }
+    //     for (auto &[i, r] : unsorted) {
+    //         for (auto &j : r) {
+    //             Vector3 pos = j->getPos();
+    //         }
+    //     }
+    //     std::sort(keys.begin(), keys.end());
+    //     for (auto &i : keys) {
+    //         for (auto &j : unsorted[i]) {
+    //             sorted.emplace_back(j);
+    //             Vector3 pos = j->getPos();
+    //         }
+    //     }
+    //     for (int i = sorted.size() - 1; i >= 0; i--)
+    //         sorted[i]->draw();
+    // }
 }

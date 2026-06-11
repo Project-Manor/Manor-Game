@@ -72,7 +72,7 @@ namespace man::render {
         void _term();
 
         void _updateRenderTexRes();
-        void _drawWorldRenders();
+        // void _drawWorldRenders();
 
         bool _isAlive;
         Camera3D _cam;

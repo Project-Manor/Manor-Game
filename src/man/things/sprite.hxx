@@ -23,18 +23,20 @@ namespace man::things {
         void playAnimation(std::string name);
         void flipSprite(bool b);
         std::string getAnimation();
+        Vector3 getDrawPos();
 
 
     private:
         void _launch();
 
-        Rectangle _texRec;
+        Model _model;
+        Shader _shader;
         int _lastAnimTick;
         bool _shouldSwitch;
         Animation _nextAnim;
         Animation _currentAnim;
         int _currentFrame;
         std::vector<Animation> _animations;
-        int _flip;
+        bool _flip;
     };
 }

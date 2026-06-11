@@ -13,13 +13,20 @@ man::things::Body::Body() :
 void man::things::Body::_initModel (
     std::string modelPath,
     std::string texturePath,
-    std::string shaderPath
+    std::string fShaderPath,
+    std::string vShaderPath
 ) {
     _model = LoadModel(modelPath.c_str());
     _texture = LoadTexture(texturePath.c_str());
     _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
-    if ("" != shaderPath) {
-        Shader shader = LoadShader(0, TextFormat(shaderPath.c_str(), GLSL_VERSION));
+    if ("" != fShaderPath) {
+        Shader shader;
+        if ("" != vShaderPath) {
+            shader = LoadShader(TextFormat(vShaderPath.c_str(), GLSL_VERSION), TextFormat(fShaderPath.c_str(), GLSL_VERSION));
+        }
+        else {
+            shader = LoadShader(0, TextFormat(fShaderPath.c_str(), GLSL_VERSION));
+        }
         _model.materials[0].shader = shader;
     }
     _isValid = true;

@@ -1,22 +1,24 @@
 #include "sprite.hxx"
 #include "../render/renderer.hxx"
 #include "../time.hxx"
+#include <print>
 #include <raylib.h>
 #include <raymath.h>
-#include <print>
 
 namespace man::things {
     Sprite::Sprite() :
-        _texRec({}),
         _lastAnimTick(0),
         _shouldSwitch(false),
         _currentAnim({"parasite", {}, {0}}),
         _nextAnim({"parasite", {}, {0}}),
         _currentFrame(0),
         _animations({}),
-        _flip(1)
+        _flip(false)
     {
         _addInit(this, &Sprite::_launch);
+        _model = LoadModel("res/models/quad/.obj");
+        _shader = LoadShader(0, "src/man/shaders/sprite.fs");
+        _model.materials[0].shader = _shader;
     }
 
     void Sprite::_launch() {
@@ -44,16 +46,38 @@ namespace man::things {
             if (_shouldSwitch) {
                 _currentAnim = _nextAnim;
                 _currentFrame = 0;
-                _texRec = {0, 0, (float)_currentAnim.size, (float)_currentAnim.size};
                 _shouldSwitch = false;
+
+                _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _currentAnim.spriteSheet;
             }
         }
         if (_currentFrame >= _currentAnim.length) {
             _currentFrame = 0;
         }
-        _texRec.x = _currentFrame * _currentAnim.size;
+
+        int len = _currentAnim.length;
+        SetShaderValue(_shader,
+            GetShaderLocation(_shader, "animLength"),
+            &len, SHADER_UNIFORM_INT
+        );
+        SetShaderValue(_shader,
+            GetShaderLocation(_shader, "animFrame"),
+            &_currentFrame, SHADER_UNIFORM_INT
+        );
+        int iFlip = _flip ? 1 : 0;
+        SetShaderValue(_shader,
+            GetShaderLocation(_shader, "flip"),
+            &iFlip, SHADER_UNIFORM_INT
+        );
+
         float sizeMod = _currentAnim.size / 32.0f;
-        DrawBillboardRec(render::Renderer::getCamera(), _currentAnim.spriteSheet, _texRec, _pos + Vector3(0, sizeMod / 2, 0), {(float)_flip * sizeMod, 1 * sizeMod}, WHITE);
+
+        DrawModelEx(_model, _pos, {0, 1, 0}, 0, {sizeMod, sizeMod, sizeMod}, WHITE);
+        // DrawBillboardRec(render::Renderer::getCamera(),
+        //     _currentAnim.spriteSheet,
+        //     _texRec,
+        //     _pos + Vector3(0, sizeMod / 2, 0),
+        //     {(float)_flip * sizeMod, 1 * sizeMod}, WHITE);
     }
 
     void Sprite::addAnimation(Sprite::Animation a) {
@@ -70,8 +94,12 @@ namespace man::things {
     }
 
     void Sprite::flipSprite(bool b) {
-        _flip = b ? -1 : 1;
+        _flip = b;
     }
 
     std::string Sprite::getAnimation() { return _currentAnim.name; }
+
+    Vector3 Sprite::getDrawPos() {
+        return _pos + Vector3(0, (_currentAnim.size / 32.0f) / 2, 0);
+    }
 }

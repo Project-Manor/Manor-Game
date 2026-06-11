@@ -13,7 +13,8 @@ namespace man::things {
         void _initModel (
             std::string modelPath,
             std::string texturePath,
-            std::string shaderPath = ""
+            std::string fShaderPath = "",
+            std::string vShaderPath = ""
         );
 
     private:

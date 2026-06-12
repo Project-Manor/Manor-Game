@@ -26,6 +26,7 @@ sources = [
 
     "man/things/ui/ui_element",
     "man/things/ui/ui_sprite",
+    "man/things/ui/ui_text",
 
     "game/game",
     "game/player",

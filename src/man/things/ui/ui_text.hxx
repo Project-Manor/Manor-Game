@@ -9,10 +9,18 @@ namespace man::things::ui {
         ~UIText();
         auto draw() -> void override;
 
+        auto getString() -> const std::string;
         auto setString(std::string string) -> const UIText&;
+
+        auto getFontSize() -> const float;
         auto setFontSize(float size) -> const UIText&;
+
+        auto getSpacing() -> const float;
         auto setSpacing(float spacing) -> const UIText&;
-        auto setColor(Color colour) -> const UIText&;
+
+        auto getColour() -> const Color;
+        auto setColour(Color colour) -> const UIText&;
+
         auto setFont(std::string fontPath = "parasite") -> const UIText&;
 
     protected:

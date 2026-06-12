@@ -21,11 +21,17 @@ namespace man::things::ui {
         );
     }
 
+    auto UIText::getString() -> const std::string
+    { return _str; }
+
     auto UIText::setString(std::string string) -> const UIText& {
         _str = string;
         _updateElementSize();
         return *this;
     }
+
+    auto UIText::getFontSize() -> const float
+    { return _fontSize; }
 
     auto UIText::setFontSize(float size) -> const UIText& {
         _fontSize = size;
@@ -33,13 +39,19 @@ namespace man::things::ui {
         return *this;
     }
 
+    auto UIText::getSpacing() -> const float
+    { return _spacing; }
+
     auto UIText::setSpacing(float spacing) -> const UIText& {
         _spacing = spacing;
         _updateElementSize();
         return *this;
     }
 
-    auto UIText::setColor(Color colour) -> const UIText& {
+    auto UIText::getColour() -> const Color
+    { return _clr; }
+
+    auto UIText::setColour(Color colour) -> const UIText& {
         _clr = colour;
         return *this;
     }

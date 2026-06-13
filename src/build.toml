@@ -3,7 +3,9 @@ dynamic_linkage = [
 ]
 
 include_paths = [
-    "vnd/raylib/include"
+    "vnd/raylib/include",
+    "src/man",
+    "src/game/input"
 ]
 
 sources = [
@@ -26,6 +28,7 @@ sources = [
 
     "man/things/ui/ui_element",
     "man/things/ui/ui_sprite",
+    "man/things/ui/ui_text",
 
     "game/game",
     "game/player",
@@ -34,4 +37,6 @@ sources = [
     "game/modell",
     "game/game_camera",
     "game/collision/collision"
+
+    "game/input/input"
 ]

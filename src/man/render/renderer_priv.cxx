@@ -1,10 +1,7 @@
 #include "renderer.hxx"
-#include "raylib.h"
-#include "raymath.h"
+#include <raylib.h>
 #include "../things/renderable.hxx"
 #include <unordered_map>
-#include <vector>
-#include <algorithm>
 
 #ifdef DEBUG
 #include "../things/things.hxx"
@@ -63,6 +60,7 @@ namespace man::render {
         if (IsWindowResized())
             _updateRenderTexRes();
 
+#ifdef DEBUG
         if (IsKeyPressed(KEY_ONE)) {
             setResolution({854, 480});
         }
@@ -72,6 +70,7 @@ namespace man::render {
         else if (IsKeyPressed(KEY_THREE)) {
             setResolution({1920, 1080});
         }
+#endif
 
         BeginTextureMode(_worldRenderTex); {
             BeginMode3D(_cam); {

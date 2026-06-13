@@ -8,6 +8,8 @@ from enum import Enum
 from typing import List
 import tomllib as toml
 
+srcDir: str = "src"
+
 def wrapSquare(string: str) -> str:
     return "[" + string + "]"
 
@@ -86,6 +88,10 @@ def attemptEditorFiles() -> None:
 def attemptClangdFile() -> None:
     for arg in sys.argv:
         if arg.startswith("clangd=") and arg.removeprefix("clangd=") == "1":
+            config: dict
+            with open(f"{srcDir}/build.toml", "rb") as f:
+                config = toml.load(f)
+
             print("Generating .clangd File...")
 
             with open(".clangd", "wb") as file:
@@ -96,10 +102,8 @@ def attemptClangdFile() -> None:
 
                 content += addFlag("-std=c++23")
 
-                if os.path.exists("vnd"):
-                    includes = [p for p in Path("vnd").rglob("include") if p.is_dir()]
-                    for d in includes:
-                        content += addFlag(f"-I__INSERT_PROJECT_PATH__/{d}")
+                for path in config["include_paths"]:
+                    content += addFlag(f"-I__INSERT_PROJECT_PATH__/{path}")
 
                 content+="\n\nDocumentation:\n  CommentFormat: Doxygen"
                 file.write(content.encode("utf-8"))

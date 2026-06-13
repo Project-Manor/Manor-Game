@@ -32,5 +32,6 @@ sources = [
     "game/room",
     "game/npc",
     "game/modell",
-    "game/game_camera"
+    "game/game_camera",
+    "game/collision/collision"
 ]

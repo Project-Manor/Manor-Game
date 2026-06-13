@@ -1,7 +1,6 @@
 #include "sprite.hxx"
 #include "../render/renderer.hxx"
 #include "../time.hxx"
-#include <print>
 #include <raylib.h>
 #include <raymath.h>
 
@@ -19,6 +18,11 @@ namespace man::things {
         _model = LoadModel("res/models/quad/.obj");
         _shader = LoadShader(0, "src/man/shaders/sprite.fs");
         _model.materials[0].shader = _shader;
+    }
+
+    Sprite::~Sprite() {
+        UnloadModel(_model);
+        UnloadShader(_shader);
     }
 
     void Sprite::_launch() {
@@ -71,13 +75,8 @@ namespace man::things {
         );
 
         float sizeMod = _currentAnim.size / 32.0f;
-
-        DrawModelEx(_model, _pos, {0, 1, 0}, 0, {sizeMod, sizeMod, sizeMod}, WHITE);
-        // DrawBillboardRec(render::Renderer::getCamera(),
-        //     _currentAnim.spriteSheet,
-        //     _texRec,
-        //     _pos + Vector3(0, sizeMod / 2, 0),
-        //     {(float)_flip * sizeMod, 1 * sizeMod}, WHITE);
+        float rotation = man::render::Renderer::getRot().y;
+        DrawModelEx(_model, _pos, {0, 1, 0}, rotation, {sizeMod, sizeMod, sizeMod}, WHITE);
     }
 
     void Sprite::addAnimation(Sprite::Animation a) {

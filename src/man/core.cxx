@@ -12,8 +12,8 @@ void man::init() {
 
 bool man::proc() {
     Time::instance()._proc();
-    render::Renderer::instance()._proc();
     man::Things::instance()._proc();
+    render::Renderer::instance()._proc();
     return render::Renderer::isAlive();
 }
 

@@ -11,7 +11,7 @@ GameCamera::GameCamera() :
     _activeMode(_mode::FOLLOW),
     _debugSpeed(3),
     _debugSensitivity(7),
-    _followOffset({0, .5f, 2})
+    _followOffset({0, 1.0f, 4})
 {
     _addProc(this, &GameCamera::_process);
 }

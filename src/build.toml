@@ -3,7 +3,9 @@ dynamic_linkage = [
 ]
 
 include_paths = [
-    "vnd/raylib/include"
+    "vnd/raylib/include",
+    "src/man",
+    "src/game/input"
 ]
 
 sources = [

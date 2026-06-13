@@ -8,6 +8,7 @@ namespace man::things {
     class Sprite : public render::Renderable {
     public:
         Sprite();
+        ~Sprite();
         void draw() override;
 
         struct Animation {

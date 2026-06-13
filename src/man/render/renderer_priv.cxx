@@ -3,6 +3,12 @@
 #include "../things/renderable.hxx"
 #include <unordered_map>
 
+#ifdef DEBUG
+#include "../things/things.hxx"
+#include "../../game/collision/collision.hxx"
+#include "../../game/player.hxx"
+#endif
+
 namespace man::render {
     Renderer::Renderer() :
         _isAlive(true),
@@ -32,7 +38,6 @@ namespace man::render {
             "Manor Game"
         );
 
-        SetWindowState(FLAG_WINDOW_RESIZABLE);
         setFPS(60);
 
         _worldRenderTex = LoadRenderTexture (
@@ -73,6 +78,11 @@ namespace man::render {
                 for (auto &[i , r] : _worldRenders) {
                     r->draw();
                 }
+                #ifdef DEBUG
+                    world::Collision::drawLines();
+                    auto player = man::Things::getTagged<Player>("player");
+                    player->debugDraw();
+                #endif
                 EndMode3D();
             }
 

@@ -5,6 +5,7 @@ dynamic_linkage = [
 include_paths = [
     "vnd/raylib/include",
     "src/man",
+    "src/man/registry",
     "src/game/input"
 ]
 
@@ -15,11 +16,14 @@ sources = [
     "man/time",
     "man/str_colour",
 
+    "man/registry/entry",
+    "man/registry/registry",
+
     "man/render/renderer_pub",
     "man/render/renderer_priv",
     "man/render/ui_renderable",
 
-    "man/things/things",
+    "man/things/root_thing",
     "man/things/thing",
     "man/things/sprite",
     "man/things/spatial",
@@ -31,12 +35,11 @@ sources = [
     "man/things/ui/ui_text",
 
     "game/game",
+    "game/input/input",
     "game/player",
     "game/room",
     "game/npc",
     "game/modell",
     "game/game_camera",
     "game/collision/collision"
-
-    "game/input/input"
 ]

@@ -4,7 +4,7 @@
 #include <unordered_map>
 
 #ifdef DEBUG
-#include "../things/things.hxx"
+#include "../things/root_thing.hxx"
 #include "../../game/collision/collision.hxx"
 #include "../../game/player.hxx"
 #endif
@@ -80,8 +80,8 @@ namespace man::render {
                 }
                 #ifdef DEBUG
                     world::Collision::drawLines();
-                    auto player = man::Things::getTagged<Player>("player");
-                    player->debugDraw();
+                    if (auto player = man::things::getTaggedThing<Player>("player"); player)
+                        player->debugDraw();
                 #endif
                 EndMode3D();
             }

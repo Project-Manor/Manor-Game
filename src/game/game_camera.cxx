@@ -1,5 +1,5 @@
 #include "game_camera.hxx"
-#include "../man/things/things.hxx"
+#include "../man/things/root_thing.hxx"
 #include "../man/render/renderer.hxx"
 #include "../man/time.hxx"
 #include "player.hxx"
@@ -71,7 +71,7 @@ void GameCamera::_follow() {
     }
 
     if (
-        auto player = man::Things::getTagged<Player>("player");
+        auto player = man::things::getTaggedThing<Player>("player");
         player
     ) {
         man::render::Renderer::setPos(Vector3Add(

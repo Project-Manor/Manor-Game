@@ -101,6 +101,7 @@ def attemptClangdFile() -> None:
                     return f"\n    - {flag}"
 
                 content += addFlag("-std=c++23")
+                content += addFlag("-DDEBUG")
 
                 for path in config["include_paths"]:
                     content += addFlag(f"-I__INSERT_PROJECT_PATH__/{path}")

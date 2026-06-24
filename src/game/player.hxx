@@ -2,16 +2,13 @@
 #include "../man/things/sprite.hxx"
 #include <raylib.h>
 #include <vector>
-#include <optional>
 
 class Player : public man::things::Sprite {
 public:
     Player();
-    #ifdef DEBUG
-    void debugDraw();
-    #endif
 
 private:
+    void _init();
     void _movement();
     Vector3 _moveAndCollide(Vector3, Vector3);
     Vector3 _collideAndSlide(Vector3, Vector3, int);
@@ -43,5 +40,6 @@ private:
     // Debug
     #ifdef DEBUG
     bool _debugIsColliding;
+    void _spawnDebugRenderable();
     #endif
 };

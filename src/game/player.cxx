@@ -1,11 +1,11 @@
 #include "player.hxx"
-#include "../man/time.hxx"
 #include "raylib.h"
 #include "raymath.h"
 #include "collision/collision.hxx"
 #include "cmath"
 #include <cstdlib>
-#include <print>
+#include <man>
+#include <renderable.hxx>
 
 Player::Player() :
     // Movement
@@ -16,21 +16,32 @@ Player::Player() :
     _lastMoveVec({}),
 
     // Collision
-    _collisionRadius(0.2),
+    _collisionRadius(0.2)
 
     // Debug
     #ifdef DEBUG
+    ,
     _debugIsColliding(false)
     #endif
 {
-    _addProc(this, &Player::_movement);
+    _addSystem(SystemType::Initialization, this, &Player::_init);
 
-    man::things::Sprite::addAnimation({
+    if constexpr (man::kDebug)
+        _addSystem(SystemType::Initialization, this, &Player::_spawnDebugRenderable);
+
+    _addProc(this, &Player::_movement);
+}
+
+void Player::_init() {
+    using namespace man::things;
+
+    Sprite::addAnimation({
         "idle",
         "res/spritesheets/detective_idle.png",
         {0}
     });
-    man::things::Sprite::addAnimation({
+
+    Sprite::addAnimation({
         "walk",
         "res/spritesheets/detective_walk.png",
         {2, 5}
@@ -234,31 +245,33 @@ std::vector<Player::collision> Player::_getCollisions(Vector3 pos) {
 }
 
 #ifdef DEBUG
-void Player::debugDraw() {
-    std::vector<collision> collisions = _getCollisions(_pos);
-    if (!collisions.empty()) {
-        Vector2 pos = collisions[0].pos;
-        Vector2 normal = collisions[0].normal;
-        DrawLine3D(
-            {pos.x, 0, pos.y},
-            (Vector3){pos.x, 0, pos.y} + (Vector3){normal.x, 0, normal.y} * collisions[0].dist,
-            BLUE
-        );
+void Player::_spawnDebugRenderable() {
+    createChild<Renderable>([this]() {
+        std::vector<collision> collisions = _getCollisions(_pos);
+        if (!collisions.empty()) {
+            Vector2 pos = collisions[0].pos;
+            Vector2 normal = collisions[0].normal;
+            DrawLine3D(
+                {pos.x, 0, pos.y},
+                (Vector3){pos.x, 0, pos.y} + (Vector3){normal.x, 0, normal.y} * collisions[0].dist,
+                BLUE
+            );
+            DrawCircle3D(
+                {pos.x, 0, pos.y},
+                0.05f,
+                {1, 0, 0},
+                90,
+                PURPLE
+            );
+        }
+        Color colClr = collisions.empty() ? WHITE : RED;
         DrawCircle3D(
-            {pos.x, 0, pos.y},
-            0.05f,
+            {_pos.x, 0, _pos.z},
+            _collisionRadius,
             {1, 0, 0},
             90,
-            PURPLE
+            colClr
         );
-    }
-    Color colClr = collisions.empty() ? WHITE : RED;
-    DrawCircle3D(
-        {_pos.x, 0, _pos.z},
-        _collisionRadius,
-        {1, 0, 0},
-        90,
-        colClr
-    );
+    });
 }
 #endif

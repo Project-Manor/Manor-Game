@@ -1,11 +1,12 @@
 #pragma once
-
 #include "raylib.h"
-#include "../../man/things/renderable.hxx"
 #include <vector>
 
 namespace world {
     class Collision {
+    private:
+        Collision();
+
     public:
         Collision(const Collision&) = delete;
         static Collision &instance();
@@ -23,11 +24,9 @@ namespace world {
 
         #ifdef DEBUG
         static void debug(bool b);
-        static void drawLines();
         #endif
 
-    private :
-        Collision() {};
+    private:
 
         std::vector<CollisionLine> _lines;
 

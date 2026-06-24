@@ -1,3 +1,8 @@
 #pragma once
 #include "thing.hxx"
 #include "root_thing.hxx"
+
+#include "body.hxx"
+#include "renderable.hxx"
+#include "spatial.hxx"
+#include "sprite.hxx"

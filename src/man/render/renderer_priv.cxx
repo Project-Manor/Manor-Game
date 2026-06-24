@@ -3,12 +3,6 @@
 #include "../things/renderable.hxx"
 #include <unordered_map>
 
-#ifdef DEBUG
-#include "../things/root_thing.hxx"
-#include "../../game/collision/collision.hxx"
-#include "../../game/player.hxx"
-#endif
-
 namespace man::render {
     Renderer::Renderer() :
         _isAlive(true),
@@ -78,11 +72,6 @@ namespace man::render {
                 for (auto &[i , r] : _worldRenders) {
                     r->draw();
                 }
-                #ifdef DEBUG
-                    world::Collision::drawLines();
-                    if (auto player = man::things::getTaggedThing<Player>("player"); player)
-                        player->debugDraw();
-                #endif
                 EndMode3D();
             }
 

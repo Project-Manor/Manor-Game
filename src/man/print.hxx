@@ -1,25 +1,16 @@
 #pragma once
 
-#ifndef DEBUG
-#define printspace(count)
-#define print(...)
-#define println(...)
-#define printlns(...)
-#else
+namespace man {
+    constexpr void printspace(unsigned int count = 1);
 
-#include "detail/detail_print.hxx"
+    template<typename T, typename ...Args>
+    constexpr void print(T t, Args ...args);
 
-// Print multiple newlines
-// unsigned int 'count'
-#define printspace(count) man::detail::printspace(count)
+    template<typename ...Args>
+    constexpr void println(Args ...args);
 
-// Print all arguments
-#define print(...) man::detail::print(__VA_ARGS__)
+    template<typename ...Args>
+    constexpr void printlns(Args ...args);
+}
 
-// Print all arguments, followed by a newline
-#define println(...) man::detail::println(__VA_ARGS__)
-
-// Print all arguments, each on a newline
-#define printlns(...) man::detail::printlns(__VA_ARGS__)
-
-#endif
+#include "print.t.hxx"

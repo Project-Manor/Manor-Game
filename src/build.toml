@@ -33,10 +33,6 @@ sources = [
     "man/things/body",
     "man/things/renderable",
 
-    "man/things/ui/ui_element",
-    "man/things/ui/ui_sprite",
-    "man/things/ui/ui_text",
-
     "game/game",
     "game/input/input",
     "game/player",

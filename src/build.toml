@@ -22,6 +22,7 @@ sources = [
 
     "man/registry/entry",
     "man/registry/registry",
+    "man/registry/tracking",
 
     "man/render/renderer_pub",
     "man/render/renderer_priv",

@@ -2,6 +2,7 @@
 #include "registry.hxx"
 #include <utility>
 #include <algorithm>
+#include "tracking.hxx"
 
 namespace man::registry {
     template<EntryConcept T, typename ...Args>
@@ -10,6 +11,7 @@ namespace man::registry {
 
         T *t = new T{std::forward<Args>(args)...};
         static_cast<Entry *const>(t)->_initEntry();
+        tracking::incrementTotalEntryCount();
 
         auto commit = [this, t]() {
             _ctrPtrToType.emplace(t, typeid(T));
@@ -21,6 +23,7 @@ namespace man::registry {
                 [t] () {
                     static_cast<Entry *const>(t)->_termEntry();
                     delete static_cast<T *const>(t);
+                    tracking::decrementTotalEntryCount();
                 }
             );
         };

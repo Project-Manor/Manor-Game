@@ -49,11 +49,24 @@ namespace man::render {
     void Renderer::setFPS(int value)
     { SetTargetFPS(value); }
 
-    void Renderer::addUIRenderable(const int layer, UIRenderable *render)
-    { instance()._uiRenders[layer].emplace(render); }
+    void Renderer::addUIRenderable (
+        std::size_t layer,
+        things::ui::Renderable *render
+    ) {
+        Renderer &i = instance();
 
-    void Renderer::removeUIRenderable(const int layer, UIRenderable *render)
-    { instance()._uiRenders[layer].erase(render); }
+        if (layer >= i._uiRenders.size())
+            i._uiRenders.resize(layer+1);
+
+        i._uiRenders[layer].insert(render);
+    }
+
+    void Renderer::removeUIRenderable (
+        std::size_t layer,
+        things::ui::Renderable *render
+    ) {
+        instance()._uiRenders[layer].erase(render);
+    }
 
     const long long Renderer::addRenderable(Renderable *render) {
         Renderer &inst = instance();

@@ -81,8 +81,8 @@ namespace man::render {
         BeginTextureMode(_uiRenderTex); {
             ClearBackground(BLANK);
 
-            for (std::unordered_set<UIRenderable*> &set : _uiRenders)
-                for (UIRenderable *render : set)
+            for (std::unordered_set<things::ui::Renderable*> &set : _uiRenders)
+                for (things::ui::Renderable *render : set)
                     render->draw();
 
             EndTextureMode();

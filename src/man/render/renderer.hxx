@@ -1,11 +1,11 @@
 #pragma once
-#include <array>
+#include <vector>
 #include <utility>
 #include <unordered_set>
 #include <unordered_map>
 #include <raylib.h>
 #include "../core.hxx"
-#include "ui_renderable.hxx"
+#include "../things/ui/ui_renderable.hxx"
 #include "../things/renderable.hxx"
 
 #define DEFAULT_HORIZONTAL_RESOLUTION 800
@@ -33,8 +33,15 @@ namespace man::render {
         static const int getFPS();
         static void setFPS(int value);
 
-        static void addUIRenderable(const int layer, UIRenderable *render);
-        static void removeUIRenderable(const int layer, UIRenderable *render);
+        static void addUIRenderable (
+            std::size_t layer,
+            things::ui::Renderable *render
+        );
+
+        static void removeUIRenderable (
+            std::size_t layer,
+            things::ui::Renderable *render
+        );
 
         static const long long addRenderable(Renderable *render);
         static void removeRenderable(const long long renderIndex);
@@ -90,9 +97,8 @@ namespace man::render {
             Renderable*
         > _worldRenders;
 
-        std::array <
-            std::unordered_set<UIRenderable*>,
-            16
+        std::vector <
+            std::unordered_set<things::ui::Renderable*>
         > _uiRenders;
     };
 }

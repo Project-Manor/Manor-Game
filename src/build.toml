@@ -8,6 +8,7 @@ include_paths = [
     "src/man",
     "src/man/registry",
     "src/man/things",
+    "src/man/things/ui",
 
     "src/game/input"
 ]
@@ -24,7 +25,6 @@ sources = [
 
     "man/render/renderer_pub",
     "man/render/renderer_priv",
-    "man/render/ui_renderable",
 
     "man/things/root_thing",
     "man/things/thing",
@@ -33,6 +33,11 @@ sources = [
     "man/things/body",
     "man/things/renderable",
 
+    "man/things/ui/ui_renderable",
+    "man/things/ui/ui_element",
+    "man/things/ui/ui_sprite",
+    "man/things/ui/ui_text",
+
     "game/game",
     "game/input/input",
     "game/player",
@@ -40,5 +45,7 @@ sources = [
     "game/npc",
     "game/modell",
     "game/game_camera",
-    "game/collision/collision"
+    "game/collision/collision",
+
+    "game/util/nerdy"
 ]

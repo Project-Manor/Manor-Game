@@ -37,9 +37,5 @@ private:
     const float _collisionRadius;
     Vector3 _lastPos;
 
-    // Debug
-    #ifdef DEBUG
-    bool _debugIsColliding;
     void _spawnDebugRenderable();
-    #endif
 };

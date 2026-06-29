@@ -17,12 +17,6 @@ Player::Player() :
 
     // Collision
     _collisionRadius(0.2)
-
-    // Debug
-    #ifdef DEBUG
-    ,
-    _debugIsColliding(false)
-    #endif
 {
     _addSystem(SystemType::Initialization, this, &Player::_init);
 
@@ -244,7 +238,6 @@ std::vector<Player::collision> Player::_getCollisions(Vector3 pos) {
     return collisions;
 }
 
-#ifdef DEBUG
 void Player::_spawnDebugRenderable() {
     createChild<Renderable>([this]() {
         std::vector<collision> collisions = _getCollisions(_pos);
@@ -274,4 +267,3 @@ void Player::_spawnDebugRenderable() {
         );
     });
 }
-#endif

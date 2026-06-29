@@ -215,18 +215,6 @@ namespace man::things {
             Fns &&...fns
         );
 
-        template<typename T>
-        [[deprecated("Use _addSystem() instead")]]
-        void _addInit(T *obj, void (T::*meth)());
-
-        template<typename T>
-        [[deprecated("Use _addSystem() instead")]]
-        void _addProc(T *obj, void (T::*meth)());
-
-        template<typename T>
-        [[deprecated("Use _addSystem() instead")]]
-        void _addTerm(T *obj, void (T::*meth)());
-
     private:
         void _initEntry() override;
         void _procEntry() override;

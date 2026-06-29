@@ -7,7 +7,7 @@ man::things::Body::Body() :
     _model({0}),
     _texture({0})
 {
-    _addTerm(this, &Body::_cleanup);
+    _addSystem(SystemType::Termination, this, &Body::_cleanup);
 }
 
 void man::things::Body::_initModel (

@@ -13,7 +13,7 @@ GameCamera::GameCamera() :
     _debugSensitivity(7),
     _followOffset({0, 1.0f, 4})
 {
-    _addProc(this, &GameCamera::_process);
+    _addSystem(SystemType::Process, this, &GameCamera::_process);
 }
 
 void GameCamera::_process() {

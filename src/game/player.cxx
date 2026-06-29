@@ -23,7 +23,7 @@ Player::Player() :
     if constexpr (man::kDebug)
         _addSystem(SystemType::Initialization, this, &Player::_spawnDebugRenderable);
 
-    _addProc(this, &Player::_movement);
+    _addSystem(SystemType::Process, this, &Player::_movement);
 }
 
 void Player::_init() {

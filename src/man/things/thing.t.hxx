@@ -120,19 +120,4 @@ namespace man::things {
     ) {
         _addSystem(type, this, reqFn, std::forward<Fns>(fns)...);
     }
-
-    template<typename T>
-    void Thing::_addInit(T *obj, void (T::*meth)()) {
-        _addSystem(SystemType::Initialization, obj, meth);
-    }
-
-    template<typename T>
-    void Thing::_addProc(T *obj, void (T::*meth)()) {
-        _addSystem(SystemType::Process, obj, meth);
-    }
-
-    template<typename T>
-    void Thing::_addTerm(T *obj, void (T::*meth)()) {
-        _addSystem(SystemType::Termination, obj, meth);
-    }
 }

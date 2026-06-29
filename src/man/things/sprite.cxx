@@ -14,7 +14,7 @@ namespace man::things {
         _animations({}),
         _flip(false)
     {
-        _addInit(this, &Sprite::_launch);
+        _addSystem(SystemType::Initialization, this, &Sprite::_launch);
         _model = LoadModel("res/models/quad/.obj");
         _shader = LoadShader(0, "src/man/shaders/sprite.fs");
         _model.materials[0].shader = _shader;

@@ -12,4 +12,8 @@ namespace input {
         ACTION(Left, KEY_A, KEY_LEFT)
         ACTION(Right, KEY_D, KEY_RIGHT)
     }
+
+    namespace ui {
+        ACTION(DockNerdy, KEY_F3)
+    }
 }

@@ -4,8 +4,7 @@
 #include <format>
 #include <raylib.h>
 #include <rlgl.h>
-
-#include <print.hxx>
+#include <input>
 
 namespace game::util {
     Nerdy::Nerdy() :
@@ -29,13 +28,18 @@ namespace game::util {
     {
         _addSystem(SystemType::Initialization, this,
             &Nerdy::_populatePort,
-            &Nerdy::_populateStar
+            &Nerdy::_populateStar,
+            &Nerdy::_undock
         );
 
         _addSystem(SystemType::Process, this,
             &Nerdy::_sailPort,
             &Nerdy::_sailStar,
-            &Nerdy::_adjustGunwale
+            &Nerdy::_adjustGunwale,
+            [this]() {
+                if (!input::pressed(input::ui::DockNerdy)) return;
+                _port.port->isActive() ? _undock() : _dock();
+            }
         );
     }
 
@@ -174,5 +178,15 @@ namespace game::util {
 
         _port.port->setElementSize(s);
         _star.star->setElementSize(s);
+    }
+
+    void Nerdy::_dock() {
+        _port.port->activate();
+        _star.star->activate();
+    }
+
+    void Nerdy::_undock() {
+        _port.port->deactivate();
+        _star.star->deactivate();
     }
 }

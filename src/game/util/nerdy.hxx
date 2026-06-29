@@ -31,5 +31,7 @@ namespace game::util {
         void _populatePort(), _populateStar();
         void _sailPort(), _sailStar();
         void _adjustGunwale();
+        void _dock();
+        void _undock();
     };
 }

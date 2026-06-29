@@ -22,6 +22,10 @@ namespace game::util {
 
         struct Starboard {
             man::registry::Reference<man::things::ui::Element> star;
+            man::registry::Reference<man::things::ui::Text> entriesLabel;
+            man::registry::Reference<man::things::ui::Text> createdEntries;
+            man::registry::Reference<man::things::ui::Text> aliveEntries;
+            man::registry::Reference<man::things::ui::Text> deadEntries;
         } _star;
 
         void _populatePort(), _populateStar();

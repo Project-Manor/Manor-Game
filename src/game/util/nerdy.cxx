@@ -20,7 +20,11 @@ namespace game::util {
         }),
 
         _star ({
-            .star = createChild<man::things::ui::Element>()
+            .star = createChild<man::things::ui::Element>(),
+            .entriesLabel = {nullptr},
+            .createdEntries = {nullptr},
+            .aliveEntries = {nullptr},
+            .deadEntries = {nullptr}
         })
     {
         _addSystem(SystemType::Initialization, this,
@@ -85,6 +89,48 @@ namespace game::util {
         _star.star->setHorizontalAnchor (
             Element::AnchorPoint::East
         );
+
+        Element::Anchor childAnch = {
+            .horizontal = Element::AnchorPoint::East,
+            .vertical = Element::AnchorPoint::North
+        };
+
+        _star.entriesLabel = _star.star->createChild<Text>(_renderLayer);
+        _star.entriesLabel->setAnchor(childAnch);
+        _star.entriesLabel->
+            setFont(_fontPath).
+            setFontSize(_textSize).
+            setString("- Registry Entry Stats -")
+        ;
+
+        _star.createdEntries = _star.star->createChild<Text>(_renderLayer);
+        _star.createdEntries->setAnchor(childAnch).setVerticalOffset (
+            _star.entriesLabel->getElementSize().vertical
+        );
+        _star.createdEntries->
+            setFont(_fontPath).
+            setFontSize(_textSize)
+        ;
+
+        _star.aliveEntries = _star.star->createChild<Text>(_renderLayer);
+        _star.aliveEntries->setAnchor(childAnch).setVerticalOffset (
+            _star.createdEntries->getOffset().vertical +
+            _star.createdEntries->getElementSize().vertical
+        );
+        _star.aliveEntries->
+            setFont(_fontPath).
+            setFontSize(_textSize)
+        ;
+
+        _star.deadEntries = _star.star->createChild<Text>(_renderLayer);
+        _star.deadEntries->setAnchor(childAnch).setVerticalOffset (
+            _star.aliveEntries->getOffset().vertical +
+            _star.aliveEntries->getElementSize().vertical
+        );
+        _star.deadEntries->
+            setFont(_fontPath).
+            setFontSize(_textSize)
+        ;
     }
 
     void Nerdy::_sailPort() {
@@ -102,7 +148,22 @@ namespace game::util {
         ));
     }
 
-    void Nerdy::_sailStar() {}
+    void Nerdy::_sailStar() {
+        _star.createdEntries->setString(std::format (
+            "{} :Created",
+            man::registry::tracking::getTotalCreatedEntries()
+        ));
+
+        _star.aliveEntries->setString(std::format (
+            "{} :ALive",
+            man::registry::tracking::getTotalAliveEntries()
+        ));
+
+        _star.deadEntries->setString(std::format (
+            "{} :Dead",
+            man::registry::tracking::getTotalDeadEntries()
+        ));
+    }
 
     void Nerdy::_adjustGunwale() {
         auto r = man::render::Renderer::getUIRenderTextureSize();

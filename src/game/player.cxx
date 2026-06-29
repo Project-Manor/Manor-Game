@@ -110,42 +110,42 @@ Vector3 Player::_moveAndCollide(Vector3 pos, Vector3 vel) {
     return nextPos;
 }
 
-Vector3 Player::_collideAndSlide(Vector3 pos, Vector3 vel, int depth) {
-    if (depth >= _maxBounces)
-        return {0, 0, 0};
+// Vector3 Player::_collideAndSlide(Vector3 pos, Vector3 vel, int depth) {
+//     if (depth >= _maxBounces)
+//         return {0, 0, 0};
 
-    std::vector<collision> collisions = _getCollisions(pos + vel);
-    if (!collisions.empty()) {
-        collision hit = collisions[0];
-        Vector3 dir = Vector3Normalize(vel);
-        Vector3 norm = {hit.normal.x, 0, hit.normal.y};
-        Vector3 snap2Surf = vel + norm * hit.dist;
+//     std::vector<collision> collisions = _getCollisions(pos + vel);
+//     if (!collisions.empty()) {
+//         collision hit = collisions[0];
+//         Vector3 dir = Vector3Normalize(vel);
+//         Vector3 norm = {hit.normal.x, 0, hit.normal.y};
+//         Vector3 snap2Surf = vel + norm * hit.dist;
 
-        return _collideAndSlide(pos + snap2Surf, {0, 0, 0}, depth + 1);
-    }
+//         return _collideAndSlide(pos + snap2Surf, {0, 0, 0}, depth + 1);
+//     }
 
-    return vel;
-}
+//     return vel;
+// }
 
-Vector3 Player::_solveCollision(Vector3 pos, int depth) {
-    if (depth >= _maxBounces)
-        return {0, 0, 0};
+// Vector3 Player::_solveCollision(Vector3 pos, int depth) {
+//     if (depth >= _maxBounces)
+//         return {0, 0, 0};
 
-    std::vector<collision> collisions = _getCollisions(pos);
-    if (!collisions.empty()) {
-        collision hit = collisions[0];
-        Vector3 pushback = (Vector3){hit.normal.x, 0, hit.normal.y} * hit.dist;
+//     std::vector<collision> collisions = _getCollisions(pos);
+//     if (!collisions.empty()) {
+//         collision hit = collisions[0];
+//         Vector3 pushback = (Vector3){hit.normal.x, 0, hit.normal.y} * hit.dist;
 
-        return _solveCollision(pos + pushback, depth + 1);
-    }
+//         return _solveCollision(pos + pushback, depth + 1);
+//     }
 
-    return pos;
-}
+//     return pos;
+// }
 
 std::vector<Player::collision> Player::_getCollisions(Vector3 pos) {
     std::vector<collision> collisions = {};
 
-    for (world::Collision::CollisionLine l : world::Collision::getLines()) {
+    for (const world::Collision::CollisionLine &l : world::Collision::getLines()) {
         // Check if object is near the line. Otherwise skip line.
         float minX = std::min(l.point1.x, l.point2.x);
         float maxX = std::max(l.point1.x, l.point2.x);

@@ -11,8 +11,8 @@ private:
     void _init();
     void _movement();
     Vector3 _moveAndCollide(Vector3, Vector3);
-    Vector3 _collideAndSlide(Vector3, Vector3, int);
-    Vector3 _solveCollision(Vector3, int);
+    // Vector3 _collideAndSlide(Vector3, Vector3, int);
+    // Vector3 _solveCollision(Vector3, int);
 
 
     // Movement

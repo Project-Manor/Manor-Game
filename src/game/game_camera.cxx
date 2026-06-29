@@ -71,7 +71,7 @@ void GameCamera::_follow() {
     }
 
     if (
-        auto player = man::things::getTaggedThing<Player>("player");
+        auto player = man::things::getThing<Player>();
         player
     ) {
         man::render::Renderer::setPos(Vector3Add(

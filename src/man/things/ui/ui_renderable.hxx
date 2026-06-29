@@ -15,6 +15,7 @@ namespace man::things::ui {
 
         ~Renderable();
 
+        void performDraw();
         virtual void draw();
 
     private:

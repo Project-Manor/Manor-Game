@@ -70,7 +70,7 @@ namespace man::render {
             BeginMode3D(_cam); {
                 ClearBackground(SKYBLUE);
                 for (auto &[i , r] : _worldRenders) {
-                    r->draw();
+                    r->performDraw();
                 }
                 EndMode3D();
             }
@@ -83,7 +83,7 @@ namespace man::render {
 
             for (std::unordered_set<things::ui::Renderable*> &set : _uiRenders)
                 for (things::ui::Renderable *render : set)
-                    render->draw();
+                    render->performDraw();
 
             EndTextureMode();
         }

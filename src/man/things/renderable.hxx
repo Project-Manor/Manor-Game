@@ -8,8 +8,10 @@ namespace man::render {
     public:
         Renderable();
         Renderable(std::function<void()> draw);
+
         virtual ~Renderable();
 
+        void performDraw();
         virtual void draw();
 
     private:

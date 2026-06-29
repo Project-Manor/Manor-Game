@@ -12,9 +12,12 @@ namespace man::render {
         _draw(draw)
     {}
 
-    void Renderable::draw() {
-        if (_draw) _draw.value()();
+    void Renderable::performDraw() {
+        if (!isActive()) return;
+        _draw ? _draw.value()() : draw();
     }
+
+    void Renderable::draw() {}
 
     Renderable::~Renderable() {
         Renderer::removeRenderable(_renderIndex);
